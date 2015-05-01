@@ -18,10 +18,8 @@
 	"trailing": true, // Prohibit trailing whitespaces.
 	"smarttabs": false, // Suppresses warnings about mixed tabs and spaces
 	"globals": { // Globals variables.
-		"jasmine": true,
-		"angular": true,
-		"_": true,
-		"ApplicationConfiguration": true
+		"$": true,
+		"_": true
 	},
 	"predef": [ // Extra globals.
 		"define",

@@ -1,8 +1,7 @@
 'use strict';
 
-var path = require('path'),
-	routes = require(path.resolve('./app/routes/index')),
-	users = require(path.resolve('./app/routes/users'));
+var config = require('../config'),
+	path = require('path');
 
 module.exports = function(app) {
 	app.use(function(req, res, next) {
@@ -11,8 +10,11 @@ module.exports = function(app) {
 			base: req.baseUrl,
 			path: req.path
 		};
+
 		next();
 	});
-	app.use('/', routes);
-	app.use('/users', users);
+
+	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+		require(path.resolve(routePath))(app);
+	});
 };

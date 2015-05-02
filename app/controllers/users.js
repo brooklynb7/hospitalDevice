@@ -5,6 +5,7 @@
  */
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
+	passport = require('passport'),
 	User = mongoose.model('User');
 
 /**
@@ -20,14 +21,11 @@ exports.signup = function(req, res) {
 
 	// Add missing user fields
 	user.provider = 'local';
-	user.displayName = user.firstName + ' ' + user.lastName;
 
 	// Then save the user 
 	user.save(function(err) {
 		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
+			return res.status(400).send(err);
 		} else {
 			// Remove sensitive data before login
 			user.password = undefined;
@@ -67,48 +65,10 @@ exports.signin = function(req, res, next) {
 		})(req, res, next);
 };
 
-exports.signinWechat = function(req, res, next) {
-	passport.authenticate('wechat', function(err, user, redirectURL) {
-		if (err) {
-			return res.send(err);
-		}
-		req.login(user, function(err) {
-			if (err) {
-				return res.send('login error');
-			}
-			if (redirectURL) {
-				return res.redirect(redirectURL);
-			} else {
-				return res.send('No callback url');
-			}
-		});
-	})(req, res, next);
-};
-
 /**
  * Signout
  */
 exports.signout = function(req, res) {
 	req.logout();
 	res.redirect('../');
-};
-
-/**
- * OAuth callback
- */
-exports.oauthCallback = function(strategy) {
-	return function(req, res, next) {
-		passport.authenticate(strategy, function(err, user, redirectURL) {
-			if (err || !user) {
-				return res.redirect('/#!/signin');
-			}
-			req.login(user, function(err) {
-				if (err) {
-					return res.redirect('/#!/signin');
-				}
-
-				return res.redirect(redirectURL || '/');
-			});
-		})(req, res, next);
-	};
 };

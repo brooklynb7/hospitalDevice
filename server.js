@@ -6,6 +6,7 @@ var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
 	autoIncrement = require('mongoose-auto-increment'),
+	path = require('path'),
 	moment = require('moment'),
 	chalk = require('chalk');
 
@@ -26,6 +27,12 @@ autoIncrement.initialize(db);
 
 // Init the express application
 var app = require('./config/express')(db);
+
+// Bootstrap passport config
+config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+	require(path.resolve(modelPath));
+});
+require('./config/passport')();
 
 // Start the app by listening on <port>
 app.listen(config.port);

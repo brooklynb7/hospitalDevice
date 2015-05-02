@@ -29,9 +29,6 @@ autoIncrement.initialize(db);
 var app = require('./config/express')(db);
 
 // Bootstrap passport config
-config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
-	require(path.resolve(modelPath));
-});
 require('./config/passport')();
 
 // Start the app by listening on <port>

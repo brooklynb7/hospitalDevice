@@ -1,3 +1,16 @@
+- var current = url.original
+
+mixin menuLink(href, name)
+	a(href=href)= name
+
+mixin menuActiveLi(href, name)
+	if current === href
+		li.active
+			+menuLink(href, name)
+	else 
+		li
+			+menuLink(href, name)
+
 div(class='navbar navbar-default')
 	div(class='navbar-header')
 		button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-responsive-collapse')
@@ -7,20 +20,16 @@ div(class='navbar navbar-default')
 		a(class='navbar-brand', href='/') 设备管理
 	div(class='navbar-collapse collapse navbar-responsive-collapse')
 		ul(class='nav navbar-nav')
-			li(class='active')
-				a(href='/') 首页
-			li
-				a(href='devices') 设备列表
-			li
-				a(href='data') 数据采集
+			+menuActiveLi('/', '首页')
+			+menuActiveLi('/devices', '设备列表')
+			+menuActiveLi('/data', '数据采集')
 		ul(class='nav navbar-nav navbar-right')
-			li
-				a(href='/login') 登录
+			+menuActiveLi('/signin', '登录')
 			li(class='dropdown')
-				a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') 用户1 
+				a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') 用户1
 					b(class='caret')
 				ul(class='dropdown-menu')
 					li
 						a(href='/user/me') 用户信息
 					li
-						a(href='/logout') 退出
+						a(href='/signout') 退出

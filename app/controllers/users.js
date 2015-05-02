@@ -8,9 +8,11 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User');
 
-/**
- * Signup
- */
+exports.signupPage = function(req, res){
+	res.send('test');
+	//res.render('users/signin');
+};
+
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -40,6 +42,10 @@ exports.signup = function(req, res) {
 			});
 		}
 	});
+};
+
+exports.signinPage  = function(req, res){
+	res.render('users/signin');
 };
 
 exports.signin = function(req, res, next) {

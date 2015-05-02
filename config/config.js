@@ -45,7 +45,6 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 			output = _.union(output, files);
 		}
 	}
-
 	return output;
 };
 

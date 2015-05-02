@@ -10,7 +10,7 @@ module.exports = function(app) {
 			original: req.originalUrl,
 			base: req.baseUrl,
 			path: req.path
-		}
+		};
 		next();
 	});
 	app.use('/', routes);

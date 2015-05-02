@@ -2,34 +2,23 @@
 
 
 module.exports = function(app) {
-	// catch 404 and forward to error handler
-	app.use(function(req, res, next) {
-		var err = new Error('Not Found');
-		err.status = 404;
-		next(err);
+	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
+	app.use(function(err, req, res, next) {
+		// If the error object doesn't exists
+		if (!err) return next();
+
+		// Log it
+		console.error(err.stack);
+
+		// Error page
+		res.status(err.status || 500).render('500', {
+			message: err.message,
+			error: err
+		});
 	});
 
-	// error handlers
-
-	// development error handler
-	// will print stacktrace
-	if (app.get('env') === 'development') {
-		app.use(function(err, req, res, next) {
-			res.status(err.status || 500);
-			res.render('error', {
-				message: err.message,
-				error: err
-			});
-		});
-	}
-
-	// production error handler
-	// no stacktraces leaked to user
-	app.use(function(err, req, res, next) {
-		res.status(err.status || 500);
-		res.render('error', {
-			message: err.message,
-			error: {}
-		});
+	// Assume 404 since no middleware responded
+	app.use(function(req, res) {
+		res.status(404).render('404');
 	});
 };

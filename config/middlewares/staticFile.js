@@ -9,4 +9,4 @@ module.exports = function(app) {
 
 	// Setting the app router and static folder
 	app.use('/static', express.static(path.resolve('./public')));
-}
+};

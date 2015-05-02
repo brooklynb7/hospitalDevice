@@ -7,6 +7,7 @@
     "bootstrap-material-design": "~0.3.0",
     "jquery": "1.11.2",
     "bootstrap": "~3.3.4",
-    "lodash": "~3.8.0"
+    "lodash": "~3.8.0",
+    "html5shiv": "~3.7.2"
   }
 }

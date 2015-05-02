@@ -2,8 +2,8 @@
 
 module.exports = {
 	app: {
-		title: '消毒设备管理',
-		description: '消毒设备管理',
+		title: '设备管理',
+		description: '设备管理',
 		keywords: ''
 	},
 	port: process.env.PORT || 9001,

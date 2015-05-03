@@ -10,6 +10,9 @@ module.exports = function(app) {
 			base: req.baseUrl,
 			path: req.path
 		};
+		res.locals._ = require('lodash');
+		res.locals.roles = config.roles;
+		res.locals.session = req.session;
 
 		next();
 	});

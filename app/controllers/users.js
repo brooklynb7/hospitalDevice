@@ -6,12 +6,21 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	errorHandler = require('./errors'),
 	User = mongoose.model('User');
 
-exports.signupPage = function(req, res){
-	res.send('test');
-	//res.render('users/signin');
+exports.signupPage = function(req, res) {
+	res.render('users/signup');
 };
+
+exports.signinPage = function(req, res) {
+	res.render('users/signin');
+};
+
+exports.signoutPage = function(req, res) {
+	res.send('sign out');
+};
+
 
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
@@ -27,7 +36,7 @@ exports.signup = function(req, res) {
 	// Then save the user 
 	user.save(function(err) {
 		if (err) {
-			return res.status(400).send(err);
+			return res.status(400).send(errorHandler.getErrorMessage(err));
 		} else {
 			// Remove sensitive data before login
 			user.password = undefined;
@@ -42,10 +51,6 @@ exports.signup = function(req, res) {
 			});
 		}
 	});
-};
-
-exports.signinPage  = function(req, res){
-	res.render('users/signin');
 };
 
 exports.signin = function(req, res, next) {

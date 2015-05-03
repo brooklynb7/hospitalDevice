@@ -24,12 +24,15 @@ div(class='navbar navbar-default')
 			+menuActiveLi('/devices', '设备列表')
 			+menuActiveLi('/data', '数据采集')
 		ul(class='nav navbar-nav navbar-right')
-			+menuActiveLi('/signin', '登录')
-			li(class='dropdown')
-				a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') 用户1
-					b(class='caret')
-				ul(class='dropdown-menu')
-					li
-						a(href='/user/me') 用户信息
-					li
-						a(href='/signout') 退出
+			if !session.userId
+				+menuActiveLi('/signin', '登录')
+				+menuActiveLi('/signup', '注册')
+			else
+				li(class='dropdown')
+					a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') 用户1
+						b(class='caret')
+					ul(class='dropdown-menu')
+						li
+							a(href='/user/me') 用户信息
+						li
+							a(href='/signout') 退出

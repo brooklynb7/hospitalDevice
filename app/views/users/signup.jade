@@ -1,0 +1,31 @@
+extends ../layout.jade
+
+block content
+	form.form-horizontal.signupForm
+		fieldset
+			legend.text-center 用户注册
+			div.form-group
+				label.col-lg-2.control-label(for='inputUsername') 用户名
+				div.col-lg-10
+					input.form-control#inputUsername(type='text', placeholder='请填写用户名')
+			div.form-group
+				label.col-lg-2.control-label(for='inputPassword') 密码
+				div.col-lg-10
+					input.form-control#inputPassword(type='password', placeholder='请填写密码')
+			div.form-group
+				label.col-lg-2.control-label(for='inputConfirmPassword') 确认密码
+				div.col-lg-10
+					input.form-control#inputConfirmPassword(type='password', placeholder='请再次输入密码')
+			div.form-group
+				label.col-lg-2.control-label(for='inputName') 姓名
+				div.col-lg-10
+					input.form-control#inputName(type='text', placeholder='请填写姓名')
+			div.form-group
+				label.col-lg-2.control-label(for='inputName') 手机号码
+				div.col-lg-10
+					input.form-control#inputName(type='text', placeholder='请填写手机号码')
+			div.text-center
+				button.btn.btn-primary#signupBtn(type='button') 提交注册
+			div.signupMsg.text-danger.text-center
+block extraScripts
+	script(type='text/javascript', src='/static/javascripts/users/signup.js')

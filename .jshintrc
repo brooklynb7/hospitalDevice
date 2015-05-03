@@ -19,7 +19,11 @@
 	"smarttabs": false, // Suppresses warnings about mixed tabs and spaces
 	"globals": { // Globals variables.
 		"$": true,
-		"_": true
+		"jQuery": true,
+		"_": true,
+		"BusyIndicator": true,
+		"UI": true,
+		"Service": true
 	},
 	"predef": [ // Extra globals.
 		"define",

@@ -1,3 +1,8 @@
 body{
 	clear: both;
 }
+
+.signinForm, .signupForm{
+	width: 75%;
+	margin: auto;
+}

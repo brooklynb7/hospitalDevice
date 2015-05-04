@@ -22,7 +22,7 @@
 				username: $(selector.usernameInput).val(),
 				password: $(selector.passwordInput).val()
 			}).done(function() {
-
+				window.location.href = '/';
 			}).fail(function(jqXHR) {
 				$(selector.signupMsg).text(jqXHR.responseText);
 			}).always(function() {

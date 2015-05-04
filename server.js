@@ -38,4 +38,4 @@ app.listen(config.port);
 exports = module.exports = app;
 
 // Logging initialization
-console.log('[' + moment().format('YYYY-MM-DD h:mm:ss') + '] NNB application started on port ' + config.port);
+console.log('[' + moment().format('YYYY-MM-DD h:mm:ss') + '] Application started on port ' + config.port);

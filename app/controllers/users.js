@@ -10,17 +10,30 @@ var _ = require('lodash'),
 	User = mongoose.model('User');
 
 exports.signupPage = function(req, res) {
-	res.render('users/signup');
+	if (req.isAuthenticated()) {
+		res.redirect('/');
+	} else {
+		res.render('users/signup');
+	}
 };
 
 exports.signinPage = function(req, res) {
-	res.render('users/signin');
+	if (req.isAuthenticated()) {
+		res.redirect('/');
+	} else {
+		res.render('users/signin');
+	}
 };
 
-exports.signoutPage = function(req, res) {
-	res.send('sign out');
+exports.listPage = function(req, res){
+	res.render('users/list');
 };
 
+exports.profilePage = function(req, res){
+	res.render('users/profile', {
+		user: req.session.user
+	});
+}
 
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
@@ -28,7 +41,6 @@ exports.signup = function(req, res) {
 
 	// Init Variables
 	var user = new User(req.body);
-	var message = null;
 
 	// Add missing user fields
 	user.provider = 'local';
@@ -38,17 +50,7 @@ exports.signup = function(req, res) {
 		if (err) {
 			return res.status(400).send(errorHandler.getErrorMessage(err));
 		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.json(user);
-				}
-			});
+			doLogin(user, req, res);
 		}
 	});
 };
@@ -61,19 +63,24 @@ exports.signin = function(req, res, next) {
 			if (err || !user) {
 				res.status(400).send(info);
 			} else {
-				// Remove sensitive data before login
-				user.password = undefined;
-				user.salt = undefined;
-
-				req.login(user, function(err) {
-					if (err) {
-						res.status(400).send(err);
-					} else {
-						res.json(user);
-					}
-				});
+				doLogin(user, req, res);
 			}
 		})(req, res, next);
+};
+
+var doLogin = function(user, req, res) {
+	// Remove sensitive data before login
+	user.password = undefined;
+	user.salt = undefined;
+
+	req.login(user, function(err) {
+		if (err) {
+			res.status(400).send(err);
+		} else {
+			req.session.user = user;
+			res.json(user);
+		}
+	});
 };
 
 /**
@@ -81,5 +88,36 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	res.redirect('../');
+	req.session.user = null;
+	res.redirect('/');
+};
+
+/**
+ * Require login routing middleware
+ */
+exports.requiresLogin = function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return res.status(401).render('errors/401');
+	}
+
+	next();
+};
+
+/**
+ * User authorizations routing middleware
+ */
+exports.hasAuthorization = function(roles) {
+	var _this = this;
+
+	return function(req, res, next) {
+		_this.requiresLogin(req, res, function() {
+			if (_.intersection(req.user.roles, roles).length) {
+				return next();
+			} else {
+				return res.status(403).send({
+					message: '未授权'
+				});
+			}
+		});
+	};
 };

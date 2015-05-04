@@ -20,5 +20,16 @@
 		});
 	};
 
+	Service.prototype.signin = function(credentials) {
+		return $.ajax({
+			url: this.apiUrl('/auth/signin'),
+			method: 'POST',
+			data: {
+				username: credentials.username,
+				password: credentials.password
+			}
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

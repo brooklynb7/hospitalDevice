@@ -6,6 +6,8 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	autoIncrement = require('mongoose-auto-increment'),
+	path = require('path'),
+	config = require(path.resolve('./config/config')),
 	crypto = require('crypto');
 
 /**
@@ -70,7 +72,7 @@ var UserSchema = new Schema({
 		type: [{
 			type: String
 		}],
-		default: ['user']
+		default: [config.roles.user]
 	},
 	updated: {
 		type: Date

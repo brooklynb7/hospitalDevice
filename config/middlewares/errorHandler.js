@@ -11,7 +11,7 @@ module.exports = function(app) {
 		console.error(err.stack);
 
 		// Error page
-		res.status(err.status || 500).render('500', {
+		res.status(err.status || 500).render('errors/500', {
 			message: err.message,
 			error: err
 		});
@@ -19,6 +19,6 @@ module.exports = function(app) {
 
 	// Assume 404 since no middleware responded
 	app.use(function(req, res) {
-		res.status(404).render('404');
+		res.status(404).render('errors/404');
 	});
 };

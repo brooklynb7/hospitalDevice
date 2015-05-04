@@ -10,6 +10,8 @@ module.exports = function(app) {
 	pageRouter.get('/signin', user.signinPage);
 	pageRouter.get('/signup', user.signupPage);
 	pageRouter.get('/signout', user.signout);
+	pageRouter.get('/profile', user.requiresLogin, user.profilePage);
+	pageRouter.get('/users', user.requiresLogin, user.listPage);
 
 	authRouter.post('/signin', user.signin);
 	authRouter.post('/signup', user.signup);

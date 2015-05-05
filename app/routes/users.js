@@ -9,14 +9,16 @@ var user = require('../controllers/users');
 module.exports = function(app) {
 	pageRouter.get('/signin', user.signinPage);
 	pageRouter.get('/signup', user.signupPage);
-	pageRouter.get('/signout', user.signout);
-	pageRouter.get('/profile', user.requiresLogin, user.profilePage);
-	pageRouter.get('/users', user.requiresLogin, user.listPage);
+	pageRouter.get('/signout', user.signoutPage);
+	pageRouter.get('/profile', user.requiresLoginPage, user.profilePage);
+	pageRouter.get('/users', user.requiresLoginPage, user.listPage);
+	app.use('/', pageRouter);
+
+	userRouter.get('/', user.requiresLoginApi, user.getUserList);
+	app.use('/api/users', userRouter);
+
 
 	authRouter.post('/signin', user.signin);
 	authRouter.post('/signup', user.signup);
-
-	app.use('/api/users', userRouter);
 	app.use('/api/auth', authRouter);
-	app.use('/', pageRouter);
 };

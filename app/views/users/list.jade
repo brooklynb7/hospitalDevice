@@ -1,4 +1,46 @@
 extends ../layout
 
 block content
-	h1 尚未开放
+	div.panel.panel-default#userListPanel
+		div.panel-heading
+			div
+				h3.panel-title 用户列表
+			a#addUserBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
+		div.panel-body
+			table.table.table-hover.table-striped#userList
+				thead
+					tr
+						th 用户ID
+						th 用户名
+						th 姓名
+						th 手机
+						th 邮箱
+						th.text-right Action
+				tbody
+block extraScripts
+	script(type='text/javascript', src='/static/javascripts/users/list.js')
+	script(type='text/template', id='editFormTpl')
+		form.form-horizontal
+			fieldset
+				div.form-group
+					label.col-lg-2.control-label 用户ID
+					div.col-lg-10
+						input.form-control(placeholder='用户ID', value!='<%=userId%>', disabled='')
+				div.form-group
+					label.col-lg-2.control-label 用户名
+					div.col-lg-10
+						input.form-control(placeholder='用户名', value!='<%=username%>', disabled='')
+				div.form-group
+					label.col-lg-2.control-label 姓名
+					div.col-lg-10
+						input.form-control(placeholder='姓名', value!='<%=name%>')
+				div.form-group
+					label.col-lg-2.control-label 手机
+					div.col-lg-10
+						input.form-control(placeholder='手机', value!='<%=mobile%>')
+				div.form-group
+					label.col-lg-2.control-label 邮箱
+					div.col-lg-10
+						input.form-control(placeholder='邮箱', value!='<%=email%>')
+	script(type='text/template', id='removeUserTpl')
+		p.text-warning.text-center!='您确定要删除用户 <%=username%> 吗?'

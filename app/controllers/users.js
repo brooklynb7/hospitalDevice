@@ -9,6 +9,7 @@ var _ = require('lodash'),
 	errorHandler = require('./errors'),
 	User = mongoose.model('User');
 
+/* Page controllers */
 exports.signupPage = function(req, res) {
 	if (req.isAuthenticated()) {
 		res.redirect('/');
@@ -25,16 +26,32 @@ exports.signinPage = function(req, res) {
 	}
 };
 
-exports.listPage = function(req, res){
+exports.signoutPage = function(req, res) {
+	req.logout();
+	req.session.user = null;
+	res.redirect('/');
+};
+
+
+exports.listPage = function(req, res) {
 	res.render('users/list');
 };
 
-exports.profilePage = function(req, res){
+exports.profilePage = function(req, res) {
 	res.render('users/profile', {
 		user: req.session.user
 	});
-}
+};
 
+exports.requiresLoginPage = function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return res.status(401).render('errors/401');
+	}
+
+	next();
+};
+
+/* API controllers */
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -83,29 +100,16 @@ var doLogin = function(user, req, res) {
 	});
 };
 
-/**
- * Signout
- */
-exports.signout = function(req, res) {
-	req.logout();
-	req.session.user = null;
-	res.redirect('/');
-};
-
-/**
- * Require login routing middleware
- */
-exports.requiresLogin = function(req, res, next) {
+exports.requiresLoginApi = function(req, res, next) {
 	if (!req.isAuthenticated()) {
-		return res.status(401).render('errors/401');
+		return res.status(401).json({
+			message: '请先登录'
+		});
 	}
 
 	next();
 };
 
-/**
- * User authorizations routing middleware
- */
 exports.hasAuthorization = function(roles) {
 	var _this = this;
 
@@ -120,4 +124,12 @@ exports.hasAuthorization = function(roles) {
 			}
 		});
 	};
+};
+
+exports.getUserList = function(req, res) {
+	User.find().sort('userId').select('_id userId username roles provider mobile name email flag')
+		.exec(function(err, users) {
+			if (err) return res.status(400).send(errorHandler.getErrorMessage(err));
+			res.json(users);
+		});
 };

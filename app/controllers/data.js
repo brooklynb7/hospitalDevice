@@ -10,3 +10,9 @@ var _ = require('lodash'),
 exports.indexPage = function(req, res) {
 	res.render('data/index');
 };
+
+exports.doPost = function(req, res) {
+	res.json({
+		code: 1
+	});
+};

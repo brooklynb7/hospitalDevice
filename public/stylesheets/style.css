@@ -6,3 +6,29 @@ body{
 	width: 75%;
 	margin: auto;
 }
+
+#userListPanel .panel-heading{
+	display: flex;
+}
+#userListPanel .panel-title{
+	margin-top: 3px;
+}
+#userListPanel .panel-body{
+	padding: 0;
+}
+#userList{
+	margin-bottom: 0;
+}
+
+#userListPanel #addUserBtn.btn.btn-fab {
+	margin: 0;
+	padding: 4px;
+	font-size: 16px;
+	width: 24px;
+	height: 24px;
+	margin-left: auto;
+}
+
+#userList .removeUserBtn{
+	margin-left: 5px;
+}

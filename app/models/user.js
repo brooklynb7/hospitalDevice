@@ -58,6 +58,10 @@ var UserSchema = new Schema({
 	salt: {
 		type: String
 	},
+	flag: {
+		type: Number,
+		default: 1
+	},
 	provider: {
 		type: String,
 		required: 'Provider is required'

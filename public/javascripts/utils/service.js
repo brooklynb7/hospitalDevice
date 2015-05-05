@@ -31,5 +31,12 @@
 		});
 	};
 
+	Service.prototype.getUserList = function(){
+		return $.ajax({
+			url: this.apiUrl('/users'),
+			method: 'GET'
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

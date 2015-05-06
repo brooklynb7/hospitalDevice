@@ -7,7 +7,7 @@ var user = require('../controllers/users');
 var data = require('../controllers/data');
 
 module.exports = function(app) {
-	pageRouter.get('/', data.indexPage);
+	pageRouter.get('/', user.requireLoginPage, data.indexPage);
 
 	apiRouter.post('/', data.doPost);
 	

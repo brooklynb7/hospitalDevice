@@ -82,7 +82,7 @@ var UserSchema = new Schema({
 		type: Date
 	},
 	updatedBy: {
-		type: Schema.ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
 	created: {

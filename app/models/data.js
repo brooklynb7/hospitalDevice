@@ -14,28 +14,32 @@ var mongoose = require('mongoose'),
  * Data Schema
  */
 var DataSchema = new Schema({
-	a: {
+	data1: {
 		type: String,
 		trim: true
 	},
-	b: {
+	data2: {
 		type: String,
 		trim: true
 	},
-	c: {
+	data3: {
 		type: String,
 		required: 'mandatory',
 		trim: true
 	},
-	d: {
+	data4: {
 		type: String,
 		required: 'mandatory',
 		trim: true
 	},
-	e: {
+	data5: {
 		type: String,
 		required: 'mandatory',
 		trim: true
+	},
+	device: {
+		type: Schema.Types.ObjectId,
+		ref: 'Device'
 	},
 	created: {
 		type: Date,

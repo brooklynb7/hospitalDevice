@@ -38,5 +38,20 @@
 		});
 	};
 
+	Service.prototype.updateUserInfo = function(id, userInfo){
+		return $.ajax({
+			url: this.apiUrl('/users/' + id),
+			method: 'PUT',
+			data: userInfo
+		});
+	};
+
+	Service.prototype.removeUser = function(id){
+		return $.ajax({
+			url: this.apiUrl('/users/' + id),
+			method: 'DELETE'
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

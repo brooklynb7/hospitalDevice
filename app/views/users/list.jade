@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-	div.panel.panel-default#userListPanel
+	div.panel.panel-default.userListPanel
 		div.panel-heading
 			div
 				h3.panel-title 用户列表
-			a#addUserBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
+			a.addUserBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
 		div.panel-body
-			table.table.table-hover.table-striped#userList
+			table.table.table-hover.table-striped.userList
 				thead
 					tr
 						th 用户ID
@@ -19,8 +19,35 @@ block content
 				tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/users/list.js')
+	script(type='text.template', id='addUserTpl')
+		form.form-horizontal.addUserForm
+			fieldset
+				div.form-group
+					label.col-lg-2.control-label 用户名
+					div.col-lg-10
+						input.form-control(placeholder='请填写用户名')
+				div.form-group
+					label.col-lg-2.control-label 密码
+					div.col-lg-10
+						input.form-control(placeholder='请填写密码')
+				div.form-group
+					label.col-lg-2.control-label 确认密码
+					div.col-lg-10
+						input.form-control(placeholder='请确认密码')
+				div.form-group
+					label.col-lg-2.control-label 姓名
+					div.col-lg-10
+						input.form-control(placeholder='请输入姓名')
+				div.form-group
+					label.col-lg-2.control-label 手机
+					div.col-lg-10
+						input.form-control(placeholder='请输入手机')
+				div.form-group
+					label.col-lg-2.control-label 邮箱
+					div.col-lg-10
+						input.form-control(placeholder='请输入邮箱')
 	script(type='text/template', id='editFormTpl')
-		form.form-horizontal
+		form.form-horizontal.updateUserForm
 			fieldset
 				div.form-group
 					label.col-lg-2.control-label 用户ID
@@ -33,14 +60,14 @@ block extraScripts
 				div.form-group
 					label.col-lg-2.control-label 姓名
 					div.col-lg-10
-						input.form-control(placeholder='姓名', value!='<%=name%>')
+						input.form-control#inputName(placeholder='请填写姓名', value!='<%=name%>')
 				div.form-group
 					label.col-lg-2.control-label 手机
 					div.col-lg-10
-						input.form-control(placeholder='手机', value!='<%=mobile%>')
+						input.form-control#inputMobile(placeholder='请填写手机', value!='<%=mobile%>')
 				div.form-group
 					label.col-lg-2.control-label 邮箱
 					div.col-lg-10
-						input.form-control(placeholder='邮箱', value!='<%=email%>')
+						input.form-control#inputEmail(placeholder='请填写邮箱', value!='<%=email%>')
 	script(type='text/template', id='removeUserTpl')
 		p.text-warning.text-center!='您确定要删除用户 <%=username%> 吗?'

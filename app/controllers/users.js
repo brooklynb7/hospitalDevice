@@ -9,7 +9,10 @@ var _ = require('lodash'),
 	errorHandler = require('./errors'),
 	User = mongoose.model('User');
 
-/* Page controllers */
+/* 
+ * Page controllers
+ */
+
 exports.signupPage = function(req, res) {
 	if (req.isAuthenticated()) {
 		res.redirect('/');
@@ -43,7 +46,8 @@ exports.profilePage = function(req, res) {
 	});
 };
 
-exports.requiresLoginPage = function(req, res, next) {
+/* Reuqire login page middleware */
+exports.requireLoginPage = function(req, res, next) {
 	if (!req.isAuthenticated()) {
 		return res.status(401).render('errors/401');
 	}
@@ -51,7 +55,25 @@ exports.requiresLoginPage = function(req, res, next) {
 	next();
 };
 
-/* API controllers */
+/*
+ * API controllers
+ */
+
+var doLogin = function(user, req, res) {
+	// Remove sensitive data before login
+	user.password = undefined;
+	user.salt = undefined;
+
+	req.login(user, function(err) {
+		if (err) {
+			res.status(400).send(err);
+		} else {
+			req.session.user = user;
+			res.json(user);
+		}
+	});
+};
+
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -85,22 +107,51 @@ exports.signin = function(req, res, next) {
 		})(req, res, next);
 };
 
-var doLogin = function(user, req, res) {
-	// Remove sensitive data before login
-	user.password = undefined;
-	user.salt = undefined;
+exports.getUserList = function(req, res) {
+	User.find().sort('userId').select('_id userId username roles provider mobile name email flag')
+		.exec(function(err, users) {
+			if (err) return res.status(400).send(errorHandler.getErrorMessage(err));
+			res.json(users);
+		});
+};
 
-	req.login(user, function(err) {
+exports.updateUserInfo = function(req, res) {
+	var user = req.userProfile;
+	user.name = req.body.name;
+	user.email = req.body.email;
+	user.mobile = req.body.mobile;
+	user.updated = Date.now();
+	user.updatedBy = req.user;
+
+	user.save(function(err) {
 		if (err) {
-			res.status(400).send(err);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
 		} else {
-			req.session.user = user;
-			res.json(user);
+			user.password = undefined;
+			user.salt = undefined;
+			res.jsonp(user);
 		}
 	});
 };
 
-exports.requiresLoginApi = function(req, res, next) {
+exports.removeUser = function(req, res) {
+	var user = req.userProfile;
+	user.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(user);
+		}
+	});
+};
+
+
+/* Require login API middleware */
+exports.requireLoginApi = function(req, res, next) {
 	if (!req.isAuthenticated()) {
 		return res.status(401).json({
 			message: '请先登录'
@@ -110,26 +161,14 @@ exports.requiresLoginApi = function(req, res, next) {
 	next();
 };
 
-exports.hasAuthorization = function(roles) {
-	var _this = this;
-
-	return function(req, res, next) {
-		_this.requiresLogin(req, res, function() {
-			if (_.intersection(req.user.roles, roles).length) {
-				return next();
-			} else {
-				return res.status(403).send({
-					message: '未授权'
-				});
-			}
+/* User id api middleware */
+exports.userByIdApi = function(req, res, next, id) {
+	User.findById(id).exec(function(err, user) {
+		if (err) return res.json(err);
+		if (!user) return res.status(400).json({
+			message: '未找到该用户'
 		});
-	};
-};
-
-exports.getUserList = function(req, res) {
-	User.find().sort('userId').select('_id userId username roles provider mobile name email flag')
-		.exec(function(err, users) {
-			if (err) return res.status(400).send(errorHandler.getErrorMessage(err));
-			res.json(users);
-		});
+		req.userProfile = user;
+		next();
+	});
 };

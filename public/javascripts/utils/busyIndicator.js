@@ -21,7 +21,8 @@
 					opacity: 0.5
 				},
 				baseZ: 10000,
-				centerY: true
+				centerY: true,
+				centerX: true
 			});
 			this.isVisible = true;
 		}

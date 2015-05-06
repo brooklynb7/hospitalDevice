@@ -10,15 +10,19 @@ module.exports = function(app) {
 	pageRouter.get('/signin', user.signinPage);
 	pageRouter.get('/signup', user.signupPage);
 	pageRouter.get('/signout', user.signoutPage);
-	pageRouter.get('/profile', user.requiresLoginPage, user.profilePage);
-	pageRouter.get('/users', user.requiresLoginPage, user.listPage);
+	pageRouter.get('/profile', user.requireLoginPage, user.profilePage);
+	pageRouter.get('/users', user.requireLoginPage, user.listPage);
 	app.use('/', pageRouter);
 
-	userRouter.get('/', user.requiresLoginApi, user.getUserList);
+	userRouter.get('/', user.requireLoginApi, user.getUserList);
+	userRouter.put('/:userIdApi', user.requireLoginApi, user.updateUserInfo);
+	userRouter.delete('/:userIdApi', user.requireLoginApi, user.removeUser);
 	app.use('/api/users', userRouter);
 
 
 	authRouter.post('/signin', user.signin);
 	authRouter.post('/signup', user.signup);
 	app.use('/api/auth', authRouter);
+
+	userRouter.param('userIdApi', user.userByIdApi);
 };

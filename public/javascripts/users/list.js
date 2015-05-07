@@ -70,9 +70,9 @@
 				email: $(selector.updateUserForm.emailInput).val()
 			}).done(function(user) {
 				$modal.modal('hide');
-				$(selector.userList).find("tr#" + userItem._id).replaceWith(createUserTr(user));
+				$(selector.userList).find('tr#' + userItem._id).replaceWith(createUserTr(user));
 			}).fail(function(jqXHR) {
-				$modal.find(selector.modalMsg).text(jqXHR.responseText)
+				$modal.find(selector.modalMsg).text(jqXHR.responseText);
 			}).always(function() {
 				bi.hide();
 			});
@@ -98,9 +98,9 @@
 			bi.show();
 			Service.removeUser(id).done(function(){
 				$modal.modal('hide');
-				$(selector.userList).find("tr#" + id).remove();
+				$(selector.userList).find('tr#' + id).remove();
 			}).fail(function(jqXHR){
-				$modal.find(selector.modalMsg).text(jqXHR.responseText)
+				$modal.find(selector.modalMsg).text(jqXHR.responseText);
 			}).always(function(){
 				bi.hide();
 			});

@@ -56,3 +56,5 @@ block extraScripts
 					label.col-lg-2.control-label 设备描述
 					div.col-lg-10
 						input.form-control#descriptionInput(placeholder='请输入设备描述', value!='<%=description%>')
+	script(type='text/template', id='removeDeviceTpl')
+		p.text-warning.text-center!='您确定要删除设备 <%=deviceId%> 吗?'

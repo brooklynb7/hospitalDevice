@@ -59,6 +59,19 @@ exports.updateDevice = function(req, res) {
 	});
 };
 
+exports.removeDevice = function(req, res){
+	var device = req.deviceInfo;
+	device.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(device);
+		}
+	});
+};
+
 /* Device id api middleware */
 exports.deviceByIdApi = function(req, res, next, id) {
 	Device.findById(id).exec(function(err, device) {

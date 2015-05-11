@@ -87,13 +87,12 @@
 
 	function createRemoveDeviceBtn(deviceItem) {
 		var $btn = $('<a href="javascript:void(0)" class="removeUserBtn">删除</a>');
-		var $html = $(_.template($('#removeUserTpl').html())(deviceItem));
+		var $html = $(_.template($('#removeDeviceTpl').html())(deviceItem));
 		$btn.on('click', function() {
 			UI.Modal.confirm({
-				title: '删除用户',
+				title: '删除设备',
 				html: $html,
-				confirm: removeDeviceFunction(deviceItem._id),
-				suspendConfirm: true
+				confirm: removeDeviceFunction(deviceItem._id)
 			});
 		});
 		return $btn;
@@ -103,7 +102,7 @@
 		return function($modal) {
 			var bi = new BusyIndicator($modal.find(selector.modalContent));
 			bi.show();
-			Service.removeUser(id).done(function(){
+			Service.removeDevice(id).done(function(){
 				$modal.modal('hide');
 				$(selector.deviceList).find('tr#' + id).remove();
 			}).fail(function(jqXHR){

@@ -76,5 +76,12 @@
 		});
 	};
 
+	Service.prototype.removeDevice = function(id){
+		return $.ajax({
+			url: this.apiUrl('/devices/' + id),
+			method: 'DELETE'
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

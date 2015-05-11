@@ -53,5 +53,28 @@
 		});
 	};
 
+	Service.prototype.getDeviceList = function(){
+		return $.ajax({
+			url: this.apiUrl('/devices'),
+			method: 'GET'
+		});
+	};
+
+	Service.prototype.addDevice = function(deviceObj) {
+		return $.ajax({
+			url: this.apiUrl('/devices'),
+			method: 'POST',
+			data: deviceObj
+		});
+	};
+
+	Service.prototype.updateDevice = function(id, deviceObj){
+		return $.ajax({
+			url: this.apiUrl('/devices/' + id),
+			method: 'PUT',
+			data: deviceObj
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

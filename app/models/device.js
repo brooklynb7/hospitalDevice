@@ -25,6 +25,10 @@ var DeviceSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	description: {
+		type: String,
+		trim: true
+	},
 	updated:{
 		type: Date
 	},

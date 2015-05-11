@@ -1,4 +1,58 @@
 extends ../layout
 
 block content
-	h1 尚未开放
+	div.panel.panel-default.deviceListPanel
+		div.panel-heading
+			div
+				h3.panel-title 设备列表
+			a.addDeviceBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
+		div.panel-body
+			table.table.table-hover.table-striped.deviceList
+				thead
+					tr
+						th 设备ID
+						th 设备名称
+						th 设备类型
+						th 设备描述
+						th.text-right 操作
+					tbody
+block extraScripts
+	script(type='text/javascript', src='/static/javascripts/devices/list.js')
+	script(type='text.template', id='addDeviceTpl')
+		form.form-horizontal.addDeviceForm
+			fieldset
+				div.form-group
+					label.col-lg-2.control-label 设备ID
+					div.col-lg-10
+						input.form-control#deviceIdInput(placeholder='请填写设备编号')
+				div.form-group
+					label.col-lg-2.control-label 设备名称
+					div.col-lg-10
+						input.form-control#nameInput(placeholder='请填写设备名称')
+				div.form-group
+					label.col-lg-2.control-label 设备类型
+					div.col-lg-10
+						input.form-control#typeInput(placeholder='请输入设备类型')
+				div.form-group
+					label.col-lg-2.control-label 设备描述
+					div.col-lg-10
+						input.form-control#descriptionInput(placeholder='请输入设备描述')
+	script(type='text/template', id='editFormTpl')
+		form.form-horizontal.updateUserForm
+			fieldset
+				div.form-group
+					label.col-lg-2.control-label 设备ID
+					div.col-lg-10
+						input.form-control(placeholder='设备ID', value!='<%=deviceId%>', disabled='')
+				div.form-group
+					label.col-lg-2.control-label 设备名称
+					div.col-lg-10
+						input.form-control#nameInput(placeholder='请填写设备名称', value!='<%=name%>')
+				div.form-group
+					label.col-lg-2.control-label 设备类型
+					div.col-lg-10
+						input.form-control#typeInput(placeholder='请输入设备类型', value!='<%=type%>')
+				div.form-group
+					label.col-lg-2.control-label 设备描述
+					div.col-lg-10
+						input.form-control#descriptionInput(placeholder='请输入设备描述', value!='<%=description%>')

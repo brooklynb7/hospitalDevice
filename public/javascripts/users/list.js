@@ -86,7 +86,8 @@
 			UI.Modal.confirm({
 				title: '删除用户',
 				html: $html,
-				confirm: removeUserFunction(userItem._id)
+				confirm: removeUserFunction(userItem._id),
+				suspendConfirm: true
 			});
 		});
 		return $btn;

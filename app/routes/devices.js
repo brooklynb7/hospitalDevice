@@ -7,9 +7,13 @@ var user = require('../controllers/users');
 var device = require('../controllers/devices');
 
 module.exports = function(app) {
-	pageRouter.get('/', device.listPage);
-
-	
-	app.use('/api/devices', apiRouter);
+	pageRouter.get('/', user.requireLoginPage, device.listPage);
 	app.use('/devices', pageRouter);
+
+	apiRouter.get('/', user.requireLoginApi, device.getDeviceList);
+	apiRouter.post('/', user.requireLoginApi, device.addDevice);
+	apiRouter.put('/:deviceIdApi', user.requireLoginApi, device.updateDevice);
+	app.use('/api/devices', apiRouter);
+
+	apiRouter.param('deviceIdApi', device.deviceByIdApi);
 };

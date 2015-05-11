@@ -7,20 +7,25 @@ body{
 	margin: auto;
 }
 
-.userListPanel .panel-heading{
+.userListPanel .panel-heading,
+.deviceListPanel .panel-heading{
 	display: flex;
 }
-.userListPanel .panel-title{
+.userListPanel .panel-title,
+.deviceListPanel .panel-title{
 	margin-top: 3px;
 }
-.userListPanel .panel-body{
+.userListPanel .panel-body,
+.deviceListPanel .panel-body{
 	padding: 0;
 }
-.userList{
+.userList,
+.deviceList{
 	margin-bottom: 0;
 }
 
-.userListPanel .addUserBtn.btn.btn-fab {
+.userListPanel .addUserBtn.btn.btn-fab,
+.deviceListPanel .addDeviceBtn.btn.btn-fab {
 	margin: 0;
 	padding: 4px;
 	font-size: 16px;
@@ -29,6 +34,7 @@ body{
 	margin-left: auto;
 }
 
-.userList .removeUserBtn{
+.userList .removeUserBtn,
+.deviceList .removeUserBtn{
 	margin-left: 5px;
 }

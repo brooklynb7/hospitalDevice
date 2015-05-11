@@ -1,7 +1,8 @@
 'use strict';
 
 var fieldMapping = {
-	username: '用户名'
+	username: '用户名',
+	deviceId: '设备编号'
 };
 
 /**

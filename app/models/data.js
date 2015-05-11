@@ -41,6 +41,10 @@ var DataSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Device'
 	},
+	msgTime: {
+		type: Date,
+		default: Date.now
+	},
 	created: {
 		type: Date,
 		default: Date.now

@@ -24,17 +24,19 @@ var DataSchema = new Schema({
 	},
 	data3: {
 		type: String,
-		required: 'mandatory',
 		trim: true
 	},
 	data4: {
 		type: String,
-		required: 'mandatory',
 		trim: true
 	},
 	data5: {
 		type: String,
-		required: 'mandatory',
+		trim: true
+	},
+	deviceId: {
+		type: String,
+		required: '缺少设备ID',
 		trim: true
 	},
 	device: {
@@ -42,8 +44,7 @@ var DataSchema = new Schema({
 		ref: 'Device'
 	},
 	msgTime: {
-		type: Date,
-		default: Date.now
+		type: Date
 	},
 	created: {
 		type: Date,
@@ -52,3 +53,30 @@ var DataSchema = new Schema({
 });
 
 mongoose.model('Data', DataSchema);
+
+
+/*
+ *	Qualified Data Schema
+ */
+
+var QualifiedDataSchema = new Schema({
+	deviceId: {
+		type: String,
+		required: '缺少设备ID',
+		trim: true
+	},
+	device: {
+		type: Schema.Types.ObjectId,
+		ref: 'Device'
+	},
+	isQualified: Boolean,
+	msgTime: {
+		type: Date
+	},
+	create: {
+		type: Date,
+		default: Date.now
+	}
+});
+mongoose.model('QualifiedData', QualifiedDataSchema);
+

@@ -6,8 +6,8 @@ block content
 			div
 				h3.panel-title 用户列表
 			a.addUserBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
-		div.panel-body
-			table.table.table-hover.table-striped.userList
+		div.panel-body.table-responsive
+			table.table.table-hover.table-striped.table-bordered.userList
 				thead
 					tr
 						th 用户ID
@@ -15,7 +15,7 @@ block content
 						th 姓名
 						th 手机
 						th 邮箱
-						th.text-right 操作
+						th.action.text-center 操作
 				tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/users/list.js')

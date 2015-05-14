@@ -5,6 +5,9 @@
 		this.url_prefix = '/api';
 	};
 
+	/*
+	 *	User Api
+	 */
 	Service.prototype.apiUrl = function(serviceUrl) {
 		if (serviceUrl.indexOf('/') !== 0) {
 			serviceUrl = '/' + serviceUrl;
@@ -60,6 +63,10 @@
 		});
 	};
 
+	/*
+	 *	Device Api
+	 */
+
 	Service.prototype.addDevice = function(deviceObj) {
 		return $.ajax({
 			url: this.apiUrl('/devices'),
@@ -80,6 +87,17 @@
 		return $.ajax({
 			url: this.apiUrl('/devices/' + id),
 			method: 'DELETE'
+		});
+	};
+
+	/*
+	 *	Data Api
+	 */
+
+	Service.prototype.simluateData = function(days, deviceId){
+		return $.ajax({
+			url: this.apiUrl('/data/simulate/' + deviceId + '/' + days),
+			method: 'POST'
 		});
 	};
 

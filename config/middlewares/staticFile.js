@@ -16,5 +16,7 @@ module.exports = function(app) {
 	//app.use(favicon(__dirname + '/public/favicon.ico'));
 
 	// Setting the app router and static folder
-	app.use('/static', express.static(path.resolve('./public')));
+	app.use('/static', express.static(path.resolve('./public'), {
+		maxAge: 1000*60*60*24*365
+	}));
 };

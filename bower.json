@@ -9,6 +9,8 @@
     "bootstrap": "~3.3.4",
     "lodash": "~3.8.0",
     "html5shiv": "~3.7.2",
-    "blockui": "*"
+    "blockui": "*",
+    "flot": "~0.8.3",
+    "moment": "~2.10.3"
   }
 }

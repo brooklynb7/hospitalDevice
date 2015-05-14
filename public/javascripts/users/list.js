@@ -41,7 +41,7 @@
 		$tr.append($('<td>').text(userItem.name));
 		$tr.append($('<td>').text(userItem.mobile));
 		$tr.append($('<td>').text(userItem.email));
-		$tr.append($('<td class="text-right">')
+		$tr.append($('<td class="text-center">')
 			.append(createEditUserBtn(userItem))
 			.append(createRemoveUserBtn(userItem)));
 		return $tr;

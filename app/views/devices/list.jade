@@ -6,15 +6,15 @@ block content
 			div
 				h3.panel-title 设备列表
 			a.addDeviceBtn.btn.btn-primary.btn-sm.btn-fab.btn-raised.mdi-content-add(href='javascript:void(0)')
-		div.panel-body
-			table.table.table-hover.table-striped.deviceList
+		div.panel-body.table-responsive
+			table.table.table-hover.table-striped.table-bordered.deviceList
 				thead
 					tr
 						th 设备ID
 						th 设备名称
 						th 设备类型
 						th 设备描述
-						th.text-right 操作
+						th.text-center.action 操作
 					tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/devices/list.js')

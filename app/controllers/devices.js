@@ -29,6 +29,8 @@ exports.getDeviceList = function(req, res) {
 
 exports.addDevice = function(req, res) {
 	var device = new Device(req.body);
+	device.updated = Date.now();
+	device.updatedBy = req.user;
 
 	device.save(function(err) {
 		if (err) {

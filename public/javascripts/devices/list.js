@@ -47,7 +47,7 @@
 		$tr.append($('<td>').text(deviceItem.name));
 		$tr.append($('<td>').text(deviceItem.type));
 		$tr.append($('<td>').text(deviceItem.description));
-		$tr.append($('<td class="text-right">')
+		$tr.append($('<td class="text-center">')
 			.append(createEditDeviceBtn(deviceItem))
 			.append(createRemoveDeviceBtn(deviceItem)));
 		return $tr;

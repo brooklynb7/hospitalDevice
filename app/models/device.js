@@ -33,7 +33,8 @@ var DeviceSchema = new Schema({
 		type: Date
 	},
 	updatedBy:{
-		type: Schema.Types.ObjectId
+		type: Schema.Types.ObjectId,
+		refs: 'User'
 	},
 	created: {
 		type: Date,

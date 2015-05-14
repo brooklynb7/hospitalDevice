@@ -1,4 +1,14 @@
 extends ../layout
 
 block content
-	h1 尚未开放
+	div.panel.panel-default.apiPanel#dataApiPanel
+		div.panel-heading 设备数据采集API
+		div.panel-body
+			div 模拟设备ID为DV0001的前7天数据
+			div 
+				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
+	div.panel.panel-default
+		div.panel-heading 消毒是否合格数据采集API
+		div.panel-body API
+block extraScripts
+	script(type='text/javascript', src='/static/javascripts/data/index.js')

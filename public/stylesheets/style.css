@@ -15,6 +15,9 @@ body{
 .deviceListPanel .panel-title{
 	margin-top: 3px;
 }
+.padding-0{
+	padding: 0 !important;
+}
 .userListPanel .panel-body,
 .deviceListPanel .panel-body{
 	padding: 0;
@@ -37,4 +40,13 @@ body{
 .userList .removeUserBtn,
 .deviceList .removeUserBtn{
 	margin-left: 5px;
+}
+
+th.action{
+	width: 12%;
+}
+
+.apiPanel td.column{
+	width: 12%;
+	text-align: right;
 }

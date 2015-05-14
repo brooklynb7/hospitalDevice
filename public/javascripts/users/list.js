@@ -23,12 +23,11 @@
 		var bi = new BusyIndicator($(selector.userList));
 		bi.show();
 		Service.getUserList().done(function(userList) {
-			console.log(userList);
 			$.each(userList, function(idx, userItem) {
 				$(selector.userListTbody).append(createUserTr(userItem));
 			});
-		}).fail(function() {
-
+		}).fail(function(jqXHR) {
+			console.log(jqXHR.responseText);
 		}).always(function() {
 			bi.hide();
 		});

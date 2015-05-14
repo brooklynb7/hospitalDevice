@@ -19,9 +19,39 @@ exports.indexPage = function(req, res) {
 	res.render('data/index');
 };
 
+exports.detailPage = function(req, res) {
+	res.render('data/detail');
+};
+
 /*
  *	API controller
  */
+
+exports.getDataList = function(req, res) {
+	var deviceId = req.query.deviceId;
+	var date = req.query.date;
+	if (!deviceId) {
+		return res.status(400).send('缺少设备ID');
+	} else if (!date) {
+		return res.status(400).send('缺少日期');
+	}
+
+	var startTime = moment(date, 'YYYYMMDD');
+	var endTime = moment(date, 'YYYYMMDD').add(1, 'days');
+
+	Data.find({
+			msgTime: {
+				$lt: endTime.toDate(),
+				$gte: startTime.toDate()
+			}
+		})
+		.sort('-msgTime')
+		.exec(function(err, dataList) {
+			if (err) return res.status(400).send(errorHandler.getErrorMessage(err));
+			res.json(dataList);
+		});
+
+};
 
 exports.doPost = function(req, res) {
 	var paramters = req.body;

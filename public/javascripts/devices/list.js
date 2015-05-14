@@ -30,7 +30,6 @@
 		var bi = new BusyIndicator($(selector.deviceList));
 		bi.show();
 		Service.getDeviceList().done(function(deviceList) {
-			console.log(deviceList);
 			$.each(deviceList, function(idx, deviceItem) {
 				$(selector.deviceListTbody).append(createDeviceTr(deviceItem));
 			});

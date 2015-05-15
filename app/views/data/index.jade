@@ -4,7 +4,12 @@ block content
 	div.panel.panel-default.apiPanel#dataApiPanel
 		div.panel-heading 设备数据采集API
 		div.panel-body
-			div 模拟设备ID为DV0001的前7天数据
+			div 
+				span 模拟采集
+				select.form-control.inline-control.deviceSelect
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')'
+				span 前7天的数据
 			div 
 				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
 	div.panel.panel-default

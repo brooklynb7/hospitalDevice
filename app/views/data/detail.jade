@@ -1,19 +1,35 @@
 extends ../layout
 
+mixin dateOption(day)
+	- var date = moment().subtract(day, 'day');
+	option(value=date.format('YYYYMMDD'))= date.format('YYYY-MM-DD')
+
 block content
 	div.panel.panel-default.dataPanel
 		div.panel-heading
-			h3.panel-title 设备DV0001 在 2015-05-12 的指标记录
-		div.panel-body.table-responsive.padding-0
-			table.table.table-hover.table-striped.table-bordered.dataList
-				thead
-					tr
-						th 指标1
-						th 数据2
-						th 指标3
-						th 指标4
-						th 指标5
-						th 时间
-				tbody
+			h3.panel-title 
+				select.form-control.inline-control.deviceSelect
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')' 
+				span 在 
+				select.form-control.inline-control.dateSelect
+					- var i = 1
+					while i <= 7
+						+dateOption(i++)
+				sapn 的指标记录(数值小于2的将标记为红色警示)
+		div.panel-body.padding-0
+			div.demo-container
+				div.flot-placeholder#dataFlotPlacehoder
+			div.table-responsive
+				table.table.table-hover.table-striped.table-bordered.dataList
+					thead
+						tr
+							th 指标1
+							th 数据2
+							th 指标3
+							th 指标4
+							th 指标5
+							th 时间
+					tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/data/detail.js')

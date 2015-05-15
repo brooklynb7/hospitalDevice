@@ -9,18 +9,37 @@ var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	Data = mongoose.model('Data'),
 	QualifiedData = mongoose.model('QualifiedData'),
+	Device = mongoose.model('Device'),
 	errorHandler = require('./errors');
 
 /*
  *	Page controller
  */
 
+var getDeviceListFn = function(cb) {
+	Device.find().sort('deviceId').select('deviceId name').exec(cb);
+}
+
 exports.indexPage = function(req, res) {
-	res.render('data/index');
+	async.parallel([getDeviceListFn], function(err, results) {
+		if (err) return next(err, req, res);
+
+		var deviceList = results[0];
+		res.render('data/index', {
+			deviceList: deviceList
+		});
+	});
 };
 
 exports.detailPage = function(req, res) {
-	res.render('data/detail');
+	async.parallel([getDeviceListFn], function(err, results) {
+		if (err) return next(err, req, res);
+
+		var deviceList = results[0];
+		res.render('data/detail', {
+			deviceList: deviceList
+		});
+	});
 };
 
 /*
@@ -43,7 +62,8 @@ exports.getDataList = function(req, res) {
 			msgTime: {
 				$lt: endTime.toDate(),
 				$gte: startTime.toDate()
-			}
+			},
+			deviceId: deviceId
 		})
 		.sort('-msgTime')
 		.exec(function(err, dataList) {
@@ -95,7 +115,8 @@ exports.simulateData = function(req, res) {
 		msgTime: {
 			$lt: todayTimestamp,
 			$gte: daysAgoTimestamp
-		}
+		},
+		deviceId: deviceId
 	}, function(err) {
 		if (err) {
 			return res.status(400).send(errorHandler.getErrorMessage(err));

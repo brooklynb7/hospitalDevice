@@ -11,6 +11,7 @@ module.exports = function(app) {
 			path: req.path
 		};
 		res.locals._ = require('lodash');
+		res.locals.moment = require('moment');
 		res.locals.roles = config.roles;
 		res.locals.session = req.session;
 

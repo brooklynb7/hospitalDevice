@@ -1,7 +1,9 @@
 body{
 	clear: both;
 }
-
+.m-h-500{
+	max-height: 500px;
+}
 .form-control.inline-control {
 	display: inline-block;
   	width: auto;
@@ -17,7 +19,7 @@ body{
 .demo-container {
 	box-sizing: border-box;
 	width: 100%;
-	height: 450px;
+	height: 250px;
 	padding: 10px;
 	margin: 0;
 	border: 1px solid #ddd;
@@ -71,6 +73,10 @@ body{
 .userList .removeUserBtn,
 .deviceList .removeUserBtn{
 	margin-left: 5px;
+}
+
+.table.dataList{
+	margin-bottom: 0;
 }
 
 th.action{

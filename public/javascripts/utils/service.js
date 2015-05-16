@@ -101,6 +101,13 @@
 		});
 	};
 
+	Service.prototype.simluateQualifiedData = function(days, deviceId){
+		return $.ajax({
+			url: this.apiUrl('/data/qualified/simulate/' + deviceId + '/' + days),
+			method: 'POST'
+		});
+	};
+
 	Service.prototype.getDataList = function(date, deviceId){
 		return $.ajax({
 			url: this.apiUrl('/data?deviceId=' + deviceId + '&date=' + date),

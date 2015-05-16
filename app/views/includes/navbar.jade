@@ -24,7 +24,12 @@ div(class='navbar navbar-default')
 			+menuActiveLi('/hospitals', '医院信息')
 			+menuActiveLi('/devices', '设备列表')
 			+menuActiveLi('/data', '数据采集')
-			+menuActiveLi('/data/details', '详细数据')
+			li(class='dropdown')
+				a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') 数据图表
+					b(class='caret')
+				ul(class='dropdown-menu')
+					+menuActiveLi('/data/details', '设备采集数据')
+					+menuActiveLi('/data/qualified/details', '消毒合格数据')
 			+menuActiveLi('/users', '用户管理')
 		ul(class='nav navbar-nav navbar-right')
 			if !session.user
@@ -35,7 +40,6 @@ div(class='navbar navbar-default')
 					a(href='javascript:void(0)', data-target='#' class='dropdown-toggle' data-toggle='dropdown') #{session.user.username}
 						b(class='caret')
 					ul(class='dropdown-menu')
-						li
-							a(href='/profile') 用户信息
+						+menuActiveLi('/profile', '用户信息')
 						li
 							a(href='/signout') 退出

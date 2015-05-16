@@ -9,6 +9,7 @@
 		dateSelect: '.dataPanel .dateSelect',
 		selectedDevice: '.dataPanel .deviceSelect option:selected',
 		selectedDate: '.dataPanel .dateSelect option:selected',
+		dataFlot: '.dataPanel #dataFlotPlacehoder',
 		modalMsg: '.modal-msg',
 		modalContent: '.modal-content'
 	};
@@ -33,12 +34,14 @@
 		});
 	}
 
-	function renderDataFLot(dataList) {
-		$.plot("#dataFlotPlacehoder", [dataList], {
+	function renderDataFLot(dataList, dateVal) {
+		$.plot(selector.dataFlot, [dataList], {
 			xaxis: {
 				mode: "time",
 				timezone: "browser",
-				minTickSize: [1, "hour"]
+				minTickSize: [1, "hour"],
+				min: moment(dateVal, 'YYYYMMDD'),
+				max: moment(dateVal, 'YYYYMMDD').add(1, 'days')
 			}
 		});
 	}
@@ -48,17 +51,24 @@
 		bi.show();
 		Service.getDataList(date, deviceId).done(function(dataList) {
 			$(selector.dataListTbody).empty();
+			var flotData = [];
 			if (dataList.length === 0) {
 				$(selector.dataListTbody).append(createEmptyDataTr());
 			} else {
-				var flotData = [];
 				$.each(dataList, function(idx, dataItem) {
 					$(selector.dataListTbody).append(createDataTr(dataItem));
 					flotData.push([new Date(dataItem.msgTime).valueOf(), parseInt(dataItem.data1)]);
 				});
-				console.log(flotData);
-				renderDataFLot(flotData);
 			}
+			renderDataFLot({
+				label: '指标1',
+				data: flotData,
+				color: 'rgb(30, 180, 20)',
+				threshold: {
+					below: 2,
+					color: 'rgb(200, 20, 30)'
+				}
+			}, date);
 		}).fail(function(jqXHR) {
 			console.log(jqXHR.responseText);
 		}).always(function() {

@@ -15,6 +15,6 @@ module.exports = function(app) {
 	apiRouter.post('/', user.requireLoginApi, data.doPost);
 	apiRouter.post('/simulate/:deviceId/:days', user.requireLoginApi, data.simulateData);
 	apiRouter.post('/qualified', user.requireLoginApi, data.doPostQualifed);
-
+	apiRouter.post('/qualified/simulate/:deviceId/:days', user.requireLoginApi, data.simulateQualifiedData);
 	app.use('/api/data', apiRouter);
 };

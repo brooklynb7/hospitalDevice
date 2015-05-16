@@ -172,3 +172,58 @@ exports.doPostQualifed = function(req, res) {
 		}
 	});
 };
+
+exports.simulateQualifiedData = function(req, res) {
+	var deviceId = req.params.deviceId;
+
+	if (!deviceId) {
+		return res.this.status(400).send('缺少设备ID');
+	}
+
+	var days = parseInt(req.params.days);
+	if (days === NaN) {
+		days = 1;
+	}
+
+	var daysAgoTimestamp = moment(moment().subtract(days, 'days').format('YYYY-MM-DD')).valueOf();
+	var todayTimestamp = moment(moment().format('YYYY-MM-DD')).valueOf();
+
+	QualifiedData.remove({
+		msgTime: {
+			$lt: todayTimestamp,
+			$gte: daysAgoTimestamp
+		},
+		deviceId: deviceId
+	}, function(err) {
+		if (err) {
+			return res.status(400).send(errorHandler.getErrorMessage(err));
+		} else {
+			var addDataFunctions = [];
+			var addDataTimeArray = [];
+			var twoHours = 1000 * 60 * 60 * 2;
+			for (var i = daysAgoTimestamp; i < todayTimestamp; i = i + twoHours) {
+				addDataTimeArray.push(i);
+			}
+			_.forEach(addDataTimeArray, function(value, index) {
+				addDataFunctions.push(function(cb) {
+					var qualifiedData = new QualifiedData({
+						isQualified: _.inRange(_.random(1, 6), 2),
+						deviceId: deviceId,
+						msgTime: value
+					});
+					qualifiedData.save(function(err) {
+						cb(err, qualifiedData);
+					});
+				});
+			});
+
+			async.series(addDataFunctions, function(err, results) {
+				if (err) {
+					return res.status(400).send(errorHandler.getErrorMessage(err));
+				} else {
+					res.status(200).send('完成');
+				}
+			});
+		}
+	});
+};

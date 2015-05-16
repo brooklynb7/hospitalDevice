@@ -12,8 +12,16 @@ block content
 				span 前7天的数据
 			div 
 				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
-	div.panel.panel-default
-		div.panel-heading 消毒是否合格数据采集API
-		div.panel-body API
+	div.panel.panel-default.apiPanel#qualifiedDataApiPanel
+		div.panel-heading 消毒合格数据采集API
+		div.panel-body
+			div 
+				span 模拟采集
+				select.form-control.inline-control.deviceSelect
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')'
+				span 前7天的数据
+			div 
+				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/data/index.js')

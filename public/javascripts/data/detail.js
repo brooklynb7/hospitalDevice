@@ -10,13 +10,26 @@
 		selectedDevice: '.dataPanel .deviceSelect option:selected',
 		selectedDate: '.dataPanel .dateSelect option:selected',
 		dataFlot: '.dataPanel #dataFlotPlacehoder',
+		dataTab: '.nav.nav-tabs.dataTab>li>a',
 		modalMsg: '.modal-msg',
 		modalContent: '.modal-content'
 	};
 
+	var currentDataType = 1;
+	var flotConfig = {
+		data: [],
+		color: 'rgb(30, 180, 20)',
+		threshold: {
+			below: 2,
+			color: 'rgb(200, 20, 30)'
+		}
+	};
+	var data = [];
+
 	$(document).ready(function() {
 		bindDeviceSelectChangeEvent();
 		bindDateSelectChangeEvent();
+		bindDataTabChangeEvent();
 		loadDataList($(selector.selectedDevice).val(), $(selector.selectedDate).val());
 	});
 
@@ -34,14 +47,30 @@
 		});
 	}
 
+	function bindDataTabChangeEvent() {
+		$(selector.dataTab).on('click', function() {
+			currentDataType = parseInt($(this).attr('dataType'));
+			flotConfig.data = data[currentDataType-1];
+			renderDataFLot(flotConfig, $(selector.selectedDate).val());
+		});
+	}
+
 	function renderDataFLot(dataList, dateVal) {
 		$.plot(selector.dataFlot, [dataList], {
 			xaxis: {
-				mode: "time",
-				timezone: "browser",
-				minTickSize: [1, "hour"],
+				mode: 'time',
+				timezone: 'browser',
+				minTickSize: [1, 'hour'],
 				min: moment(dateVal, 'YYYYMMDD'),
 				max: moment(dateVal, 'YYYYMMDD').add(1, 'days')
+			},
+			series: {
+				lines: {
+					show: true
+				},
+				points: {
+					show: true
+				}
 			}
 		});
 	}
@@ -51,24 +80,22 @@
 		bi.show();
 		Service.getDataList(date, deviceId).done(function(dataList) {
 			$(selector.dataListTbody).empty();
-			var flotData = [];
+			data = [[],[],[],[],[]];
 			if (dataList.length === 0) {
 				$(selector.dataListTbody).append(createEmptyDataTr());
 			} else {
 				$.each(dataList, function(idx, dataItem) {
 					$(selector.dataListTbody).append(createDataTr(dataItem));
-					flotData.push([new Date(dataItem.msgTime).valueOf(), parseInt(dataItem.data1)]);
+					var msgTime = new Date(dataItem.msgTime).valueOf();
+					data[0].push([msgTime, parseInt(dataItem.data1)]);
+					data[1].push([msgTime, parseInt(dataItem.data2)]);
+					data[2].push([msgTime, parseInt(dataItem.data3)]);
+					data[3].push([msgTime, parseInt(dataItem.data4)]);
+					data[4].push([msgTime, parseInt(dataItem.data5)]);
 				});
 			}
-			renderDataFLot({
-				label: '指标1',
-				data: flotData,
-				color: 'rgb(30, 180, 20)',
-				threshold: {
-					below: 2,
-					color: 'rgb(200, 20, 30)'
-				}
-			}, date);
+			flotConfig.data = data[currentDataType-1];
+			renderDataFLot(flotConfig, date);
 		}).fail(function(jqXHR) {
 			console.log(jqXHR.responseText);
 		}).always(function() {
@@ -88,7 +115,7 @@
 	}
 
 	function createEmptyDataTr() {
-		return $('<tr><td colspan="6" class="text-center">无数据</td></tr>')
+		return $('<tr><td colspan="6" class="text-center">无数据</td></tr>');
 	}
 
 	function createStateDataText(data) {

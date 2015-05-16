@@ -1,8 +1,11 @@
 extends ../layout
 
-mixin dateOption(day)
+mixin dateOption(day, isSelect)
 	- var date = moment().subtract(day, 'day');
-	option(value=date.format('YYYYMMDD'))= date.format('YYYY-MM-DD')
+	if isSelect
+		option(value=date.format('YYYYMMDD'), selected='selected')= date.format('YYYY-MM-DD')
+	else 
+		option(value=date.format('YYYYMMDD'))= date.format('YYYY-MM-DD')
 
 block content
 	div.panel.panel-default.dataPanel
@@ -13,12 +16,24 @@ block content
 						option(value=device.deviceId)= device.name + '('+ device.deviceId +')' 
 				span 在 
 				select.form-control.inline-control.dateSelect
+					option(value=moment().format('YYYYMMDD')) 今天
 					- var i = 1
 					while i <= 7
-						+dateOption(i++)
+						+dateOption(i++, (i===2))
 				sapn 的指标采集记录(数值小于2的将标记为红色警示)
 		div.panel-body.padding-0
-			div.demo-container
+			ul.nav.nav-tabs.dataTab
+				li.active(role='presentation')
+					a(href='javascript:void(0)' dataType='1' role='tab' data-toggle='tab') 指标1
+				li(role='presentation')
+					a(href='javascript:void(0)' dataType='2' role='tab' data-toggle='tab') 指标2
+				li(role='presentation')
+					a(href='javascript:void(0)' dataType='3' role='tab' data-toggle='tab') 指标3
+				li(role='presentation')
+					a(href='javascript:void(0)' dataType='4' role='tab' data-toggle='tab') 指标4
+				li(role='presentation')
+					a(href='javascript:void(0)' dataType='5' role='tab' data-toggle='tab') 指标5
+			div.flot-container
 				div.flot-placeholder#dataFlotPlacehoder
 			div.table-responsive.m-h-500
 				table.table.table-hover.table-striped.table-bordered.dataList

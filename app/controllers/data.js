@@ -42,6 +42,17 @@ exports.detailPage = function(req, res) {
 	});
 };
 
+exports.qualifiedDetailPage = function(req, res){
+	async.parallel([getDeviceListFn], function(err, results) {
+		if (err) return next(err, req, res);
+
+		var deviceList = results[0];
+		res.render('data/qualifiedDetail', {
+			deviceList: deviceList
+		});
+	});
+};
+
 /*
  *	API controller
  */
@@ -155,6 +166,32 @@ exports.simulateData = function(req, res) {
 	});
 };
 
+exports.getQualifiedDataList = function(req, res){
+	var deviceId = req.query.deviceId;
+	var date = req.query.date;
+	if (!deviceId) {
+		return res.status(400).send('缺少设备ID');
+	} else if (!date) {
+		return res.status(400).send('缺少日期');
+	}
+
+	var startTime = moment(date, 'YYYYMMDD');
+	var endTime = moment(date, 'YYYYMMDD').add(1, 'days');
+
+	QualifiedData.find({
+			msgTime: {
+				$lt: endTime.toDate(),
+				$gte: startTime.toDate()
+			},
+			deviceId: deviceId
+		})
+		.sort('-msgTime')
+		.exec(function(err, qualifiedDataList) {
+			if (err) return res.status(400).send(errorHandler.getErrorMessage(err));
+			res.json(qualifiedDataList);
+		});
+};
+
 exports.doPostQualifed = function(req, res) {
 	var paramters = req.body;
 	var qualifiedData = new QualifiedData({});
@@ -207,7 +244,7 @@ exports.simulateQualifiedData = function(req, res) {
 			_.forEach(addDataTimeArray, function(value, index) {
 				addDataFunctions.push(function(cb) {
 					var qualifiedData = new QualifiedData({
-						isQualified: _.inRange(_.random(1, 6), 2),
+						isQualified: !_.inRange(_.random(1, 6), 2),
 						deviceId: deviceId,
 						msgTime: value
 					});

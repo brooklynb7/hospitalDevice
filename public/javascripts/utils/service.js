@@ -115,5 +115,12 @@
 		});
 	};
 
+	Service.prototype.getQualifedDataList = function(date, deviceId){
+		return $.ajax({
+			url: this.apiUrl('/data/qualified?deviceId=' + deviceId + '&date=' + date),
+			method: 'GET'
+		});
+	};
+
 	window.Service = new Service();
 })(jQuery);

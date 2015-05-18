@@ -22,6 +22,9 @@
 		threshold: {
 			below: 2,
 			color: 'rgb(200, 20, 30)'
+		},
+		points: {
+			show: false
 		}
 	};
 	var data = [];
@@ -30,6 +33,7 @@
 		bindDeviceSelectChangeEvent();
 		bindDateSelectChangeEvent();
 		bindDataTabChangeEvent();
+		bindFlotPointHoverEvent();
 		loadDataList($(selector.selectedDevice).val(), $(selector.selectedDate).val());
 	});
 
@@ -50,7 +54,7 @@
 	function bindDataTabChangeEvent() {
 		$(selector.dataTab).on('click', function() {
 			currentDataType = parseInt($(this).attr('dataType'));
-			flotConfig.data = data[currentDataType-1];
+			flotConfig.data = data[currentDataType - 1];
 			renderDataFLot(flotConfig, $(selector.selectedDate).val());
 		});
 	}
@@ -66,11 +70,45 @@
 			},
 			series: {
 				lines: {
-					show: true
+					show: true,
+					fill: false,
+					lineWidth: 1
 				},
 				points: {
-					show: true
+					show: true,
+					radius: 1
 				}
+			},
+			grid: {
+				hoverable: true,
+				clickable: true
+			}
+		});
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#fee",
+			opacity: 0.80
+		}).appendTo("body");
+	}
+
+	function bindFlotPointHoverEvent() {
+		$(selector.dataFlot).on('plothover', function(event, pos, item) {
+			if (item) {
+				var x = item.datapoint[0],
+					y = item.datapoint[1];
+
+				$("#tooltip").html('时间: ' + moment(x).format('HH:mm:ss') + '<br/>数值: ' + y)
+					.css({
+						top: item.pageY + 5,
+						left: item.pageX + 15
+					})
+					.fadeIn(200);
+			} else {
+				$("#tooltip").hide();
 			}
 		});
 	}
@@ -80,7 +118,13 @@
 		bi.show();
 		Service.getDataList(date, deviceId).done(function(dataList) {
 			$(selector.dataListTbody).empty();
-			data = [[],[],[],[],[]];
+			data = [
+				[],
+				[],
+				[],
+				[],
+				[]
+			];
 			if (dataList.length === 0) {
 				$(selector.dataListTbody).append(createEmptyDataTr());
 			} else {
@@ -94,7 +138,7 @@
 					data[4].push([msgTime, parseInt(dataItem.data5)]);
 				});
 			}
-			flotConfig.data = data[currentDataType-1];
+			flotConfig.data = data[currentDataType - 1];
 			renderDataFLot(flotConfig, date);
 		}).fail(function(jqXHR) {
 			console.log(jqXHR.responseText);

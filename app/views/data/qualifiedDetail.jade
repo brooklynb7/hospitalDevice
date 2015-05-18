@@ -1,0 +1,35 @@
+extends ../layout
+
+mixin dateOption(day, isSelect)
+	- var date = moment().subtract(day, 'day');
+	if isSelect
+		option(value=date.format('YYYYMMDD'), selected='selected')= date.format('YYYY-MM-DD')
+	else 
+		option(value=date.format('YYYYMMDD'))= date.format('YYYY-MM-DD')
+
+block content
+	div.panel.panel-default.qualifiedDataPanel
+		div.panel-heading
+			h3.panel-title 
+				select.form-control.inline-control.deviceSelect
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')' 
+				span 在 
+				select.form-control.inline-control.dateSelect
+					option(value=moment().format('YYYYMMDD')) 今天
+					- var i = 1
+					while i <= 7
+						+dateOption(i++, (i===2))
+				sapn 的消毒合格数据记录
+		div.panel-body.padding-0
+			div.flot-container
+				div.flot-placeholder#dataFlotPlacehoder
+			div.table-responsive.m-h-500
+				table.table.table-hover.table-striped.table-bordered.dataList
+					thead
+						tr
+							th 指标1
+							th 时间
+					tbody
+block extraScripts
+	script(type='text/javascript', src='/static/javascripts/data/qualifiedDetail.js')

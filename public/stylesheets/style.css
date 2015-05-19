@@ -21,6 +21,9 @@ body{
 .m-h-500{
 	max-height: 500px;
 }
+.w-25p{
+	width: 25%;
+}
 .form-control.inline-control {
 	display: inline-block;
   	width: auto;
@@ -104,4 +107,16 @@ th.action{
 .apiPanel td.column{
 	width: 12%;
 	text-align: right;
+}
+
+div.only-th .table{
+	border-bottom:0;
+	margin-bottom:0;
+}
+
+@media screen and (max-width: 767px){
+	.table-responsive {
+		margin-bottom: 0 !important;
+		border-bottom: 0 !important;
+	}
 }

@@ -10,8 +10,12 @@
 		selectedDevice: '.qualifiedDataPanel .deviceSelect option:selected',
 		selectedDate: '.qualifiedDataPanel .dateSelect option:selected',
 		dataFlot: '.qualifiedDataPanel #dataFlotPlacehoder',
+		flotTooltip: '#tooltip',
 		modalMsg: '.modal-msg',
-		modalContent: '.modal-content'
+		modalContent: '.modal-content',
+		className: {
+			info: 'info'
+		}
 	};
 
 	var flotConfig = {
@@ -36,7 +40,14 @@
 			},
 			yaxis: {
 				min: -1,
-				max: 2
+				max: 2,
+				tickFormatter: function(v, axis) {
+					var text = '';
+					if (v === 1) text = '合格';
+					else if (v === 0) text = '不合格';
+
+					return text;
+				}
 			},
 			series: {
 				lines: {
@@ -44,7 +55,7 @@
 				},
 				points: {
 					show: true,
-					radius: 4
+					radius: 6
 				}
 			},
 			grid: {
@@ -53,14 +64,7 @@
 			}
 		});
 
-		$("<div id='tooltip'></div>").css({
-			position: "absolute",
-			display: "none",
-			border: "1px solid #fdd",
-			padding: "2px",
-			"background-color": "#fee",
-			opacity: 0.80
-		}).appendTo("body");
+		UI.appendFlotTooltip();
 	}
 
 	$(document).ready(function() {
@@ -91,33 +95,37 @@
 				var x = item.datapoint[0],
 					y = item.datapoint[1];
 
-				$("#tooltip").html('时间: ' + moment(x).format('HH:mm:ss') + '<br/>指标: ' + y)
+				$(selector.flotTooltip).html('时间: ' + moment(x).format('HH:mm:ss') + '<br/>指标: ' + (y ? '合格' : '不合格'))
 					.css({
 						top: item.pageY + 5,
 						left: item.pageX + 15
 					})
 					.fadeIn(200);
 			} else {
-				$("#tooltip").hide();
+				$(selector.flotTooltip).hide();
 			}
 		});
 	}
 
-	function bindFlotPointClickEvent(){
+	function bindFlotPointClickEvent() {
 		$(selector.dataFlot).on('plotclick', function(event, pos, item) {
 			if (item) {
 				var dataId = null;
-				if(item.datapoint[1] === 1) {
+				if (item.datapoint[1] === 1) {
 					dataId = item.series.dataIds[item.dataIndex];
 				} else {
 					dataId = item.series.thresholdDataIds[item.dataIndex]
 				}
-				plot.unhighlight();
-				plot.highlight(item.series, item.datapoint);
-				$(selector.dataListTbody + '>tr').removeClass('info');
-				$('#' + dataId).addClass('info');
+				changePlotHighlight(item.series, item.datapoint);
+				$(selector.dataListTbody + '>tr').removeClass(selector.className.info);
+				$('#' + dataId).addClass(selector.className.info);
 			}
 		});
+	}
+
+	function changePlotHighlight(series, datapoint) {
+		plot.unhighlight();
+		plot.highlight(series, datapoint);
 	}
 
 	function loadDataList(deviceId, date) {
@@ -135,7 +143,7 @@
 					$(selector.dataListTbody).append(createDataTr(dataItem));
 					var msgTime = new Date(dataItem.msgTime).valueOf();
 					flotData.push([msgTime, dataItem.isQualified ? 1 : 0]);
-					if(dataItem.isQualified) {
+					if (dataItem.isQualified) {
 						dataIds.push(dataItem._id);
 					} else {
 						thresholdDataIds.push(dataItem._id);
@@ -157,6 +165,15 @@
 		var $tr = $('<tr>').attr('id', dataItem._id);
 		$tr.append($('<td>').append(createStateDataText(dataItem.isQualified)));
 		$tr.append($('<td>').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
+		$tr.on('click', function() {
+			$(selector.dataList + ' tr').removeClass(selector.className.info);
+			$tr.addClass(selector.className.info);
+
+			var dataSeries = plot.getData()[(dataItem.isQualified ? 0 : 1)];
+			var datapoint = [new Date(dataItem.msgTime).valueOf(), dataItem.isQualified];
+			changePlotHighlight(dataSeries, datapoint);
+			console.log(plot.getData());
+		});
 		return $tr;
 	}
 

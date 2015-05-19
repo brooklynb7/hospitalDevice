@@ -35,8 +35,8 @@ block content
 					a(href='javascript:void(0)' dataType='5' role='tab' data-toggle='tab') 指标5
 			div.flot-container
 				div.flot-placeholder#dataFlotPlacehoder
-			div.table-responsive.m-h-500
-				table.table.table-hover.table-striped.table-bordered.dataList
+			div.table-responsive.m-h-500.only-th
+				table.table.table-hover.table-striped.table-bordered
 					thead
 						tr
 							th 指标1
@@ -44,7 +44,10 @@ block content
 							th 指标3
 							th 指标4
 							th 指标5
-							th 时间
+							th.w-25p.text-center 时间
+					tbody
+			div.table-responsive.m-h-500.only-tbody
+				table.table.table-hover.table-striped.table-bordered.dataList
 					tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/data/detail.js')

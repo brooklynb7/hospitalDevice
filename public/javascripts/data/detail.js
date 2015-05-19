@@ -11,11 +11,14 @@
 		selectedDate: '.dataPanel .dateSelect option:selected',
 		dataFlot: '.dataPanel #dataFlotPlacehoder',
 		dataTab: '.nav.nav-tabs.dataTab>li>a',
+		flotTooltip: '#tooltip',
 		modalMsg: '.modal-msg',
 		modalContent: '.modal-content'
 	};
 
 	var currentDataType = 1;
+	var data = [];
+	var plot = null;
 	var flotConfig = {
 		data: [],
 		color: 'rgb(30, 180, 20)',
@@ -27,7 +30,33 @@
 			show: false
 		}
 	};
-	var data = [];
+	function renderDataFLot(dataList, dateVal) {
+		plot = $.plot(selector.dataFlot, [dataList], {
+			xaxis: {
+				mode: 'time',
+				timezone: 'browser',
+				minTickSize: [1, 'hour'],
+				min: moment(dateVal, 'YYYYMMDD'),
+				max: moment(dateVal, 'YYYYMMDD').add(1, 'days')
+			},
+			series: {
+				lines: {
+					show: true,
+					fill: false,
+					lineWidth: 1
+				},
+				points: {
+					show: true,
+					radius: 1
+				}
+			},
+			grid: {
+				hoverable: true,
+				clickable: true
+			}
+		});
+		UI.appendFlotTooltip();
+	}
 
 	$(document).ready(function() {
 		bindDeviceSelectChangeEvent();
@@ -59,56 +88,20 @@
 		});
 	}
 
-	function renderDataFLot(dataList, dateVal) {
-		$.plot(selector.dataFlot, [dataList], {
-			xaxis: {
-				mode: 'time',
-				timezone: 'browser',
-				minTickSize: [1, 'hour'],
-				min: moment(dateVal, 'YYYYMMDD'),
-				max: moment(dateVal, 'YYYYMMDD').add(1, 'days')
-			},
-			series: {
-				lines: {
-					show: true,
-					fill: false,
-					lineWidth: 1
-				},
-				points: {
-					show: true,
-					radius: 1
-				}
-			},
-			grid: {
-				hoverable: true,
-				clickable: true
-			}
-		});
-
-		$("<div id='tooltip'></div>").css({
-			position: "absolute",
-			display: "none",
-			border: "1px solid #fdd",
-			padding: "2px",
-			"background-color": "#fee",
-			opacity: 0.80
-		}).appendTo("body");
-	}
-
 	function bindFlotPointHoverEvent() {
 		$(selector.dataFlot).on('plothover', function(event, pos, item) {
 			if (item) {
 				var x = item.datapoint[0],
 					y = item.datapoint[1];
 
-				$("#tooltip").html('时间: ' + moment(x).format('HH:mm:ss') + '<br/>数值: ' + y)
+				$(selector.flotTooltip).html('时间: ' + moment(x).format('HH:mm:ss') + '<br/>数值: ' + y)
 					.css({
 						top: item.pageY + 5,
 						left: item.pageX + 15
 					})
 					.fadeIn(200);
 			} else {
-				$("#tooltip").hide();
+				$(selector.flotTooltip).hide();
 			}
 		});
 	}
@@ -154,7 +147,7 @@
 		$tr.append($('<td>').append(createStateDataText(dataItem.data3)));
 		$tr.append($('<td>').append(createStateDataText(dataItem.data4)));
 		$tr.append($('<td>').append(createStateDataText(dataItem.data5)));
-		$tr.append($('<td>').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
+		$tr.append($('<td class="w-25p text-center">').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
 		return $tr;
 	}
 

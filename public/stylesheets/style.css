@@ -21,6 +21,9 @@ body{
 .m-h-500{
 	max-height: 500px;
 }
+.w-200{
+	width: 200px !important;
+}
 .form-control.inline-control {
 	display: inline-block;
   	width: auto;
@@ -115,6 +118,9 @@ th.date{
 }
 td.date{
 	width: 200px;
+}
+td.date-with-scroll{
+	width: 185px;
 }
 
 @media screen and (max-width: 767px){

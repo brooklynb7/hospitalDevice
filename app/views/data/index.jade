@@ -1,5 +1,9 @@
 extends ../layout
 
+mixin dataInput(id)
+	input.form-control.inline-control.text-center(id=id, type='text')
+	span (请填写1－10之间的数字)
+
 block content
 	div.panel.panel-default.apiPanel#dataApiPanel
 		div.panel-heading 设备数据采集API
@@ -23,23 +27,23 @@ block content
 			//- div
 			//- 	span 指标1:
 			//- 	span 
-			//- 		input.form-control.inline-control.text-center#data1Input(type='text', placeholder='请填写1－10的数字')
+			//- 		+dataInput('data1Input')
 			//- div
 			//- 	span 指标2:
 			//- 	span 
-			//- 		input.form-control.inline-control.text-center#data2Input(type='text', placeholder='请填写1－10的数字')
+			//- 		+dataInput('data2Input')
 			//- div
 			//- 	span 指标3:
 			//- 	span 
-			//- 		input.form-control.inline-control.text-center#data3Input(type='text', placeholder='请填写1－10的数字')
+			//- 		+dataInput('data3Input')
 			//- div
 			//- 	span 指标4:
 			//- 	span 
-			//- 		input.form-control.inline-control.text-center#data4Input(type='text', placeholder='请填写1－10的数字')
+			//- 		+dataInput('data4Input')
 			//- div
 			//- 	span 指标5:
 			//- 	span 
-			//- 		input.form-control.inline-control.text-center#data5Input(type='text', placeholder='请填写1－10的数字')
+			//- 		+dataInput('data5Input')
 			//- div 
 			//- 	a.simulateTodayBtn.btn.btn-primary(href='javascript:void(0)') 确定
 			//- 	span.postDataMsg

@@ -93,6 +93,13 @@
 	/*
 	 *	Data Api
 	 */
+	Service.prototype.postData = function(dataObj){
+		return $.ajax({
+			url: this.apiUrl('/data'),
+			method: 'POST'
+		});
+	};
+
 
 	Service.prototype.simluateData = function(days, deviceId){
 		return $.ajax({

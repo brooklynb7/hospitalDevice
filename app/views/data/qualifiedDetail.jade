@@ -24,12 +24,14 @@ block content
 		div.panel-body.padding-0
 			div.flot-container
 				div.flot-placeholder#dataFlotPlacehoder
-			div.table-responsive.m-h-500
-				table.table.table-hover.table-striped.table-bordered.dataList
+			div.table-responsive.only-th
+				table.table.table-hover.table-striped.table-bordered
 					thead
 						tr
-							th 指标1
-							th 时间
+							th 合格数据
+							th.date.text-center 时间					
+			div.table-responsive.m-h-500
+				table.table.table-hover.table-striped.table-bordered.dataList
 					tbody
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/data/qualifiedDetail.js')

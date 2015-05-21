@@ -164,7 +164,7 @@
 	function createDataTr(dataItem) {
 		var $tr = $('<tr>').attr('id', dataItem._id);
 		$tr.append($('<td>').append(createStateDataText(dataItem.isQualified)));
-		$tr.append($('<td>').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
+		$tr.append($('<td class="text-center date">').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
 		$tr.on('click', function() {
 			$(selector.dataList + ' tr').removeClass(selector.className.info);
 			$tr.addClass(selector.className.info);

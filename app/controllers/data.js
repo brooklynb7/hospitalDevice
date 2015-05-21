@@ -18,9 +18,9 @@ var _ = require('lodash'),
 
 var getDeviceListFn = function(cb) {
 	Device.find().sort('deviceId').select('deviceId name').exec(cb);
-}
+};
 
-exports.indexPage = function(req, res) {
+exports.indexPage = function(req, res, next) {
 	async.parallel([getDeviceListFn], function(err, results) {
 		if (err) return next(err, req, res);
 
@@ -31,7 +31,7 @@ exports.indexPage = function(req, res) {
 	});
 };
 
-exports.detailPage = function(req, res) {
+exports.detailPage = function(req, res, next) {
 	async.parallel([getDeviceListFn], function(err, results) {
 		if (err) return next(err, req, res);
 
@@ -42,7 +42,7 @@ exports.detailPage = function(req, res) {
 	});
 };
 
-exports.qualifiedDetailPage = function(req, res){
+exports.qualifiedDetailPage = function(req, res, next){
 	async.parallel([getDeviceListFn], function(err, results) {
 		if (err) return next(err, req, res);
 
@@ -115,7 +115,7 @@ exports.simulateData = function(req, res) {
 	}
 
 	var days = parseInt(req.params.days);
-	if (days === NaN) {
+	if (isNaN(days)) {
 		days = 1;
 	}
 
@@ -218,7 +218,7 @@ exports.simulateQualifiedData = function(req, res) {
 	}
 
 	var days = parseInt(req.params.days);
-	if (days === NaN) {
+	if (isNaN(days)) {
 		days = 1;
 	}
 

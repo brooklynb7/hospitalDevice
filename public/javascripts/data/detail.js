@@ -147,7 +147,7 @@
 		$tr.append($('<td>').append(createStateDataText(dataItem.data3)));
 		$tr.append($('<td>').append(createStateDataText(dataItem.data4)));
 		$tr.append($('<td>').append(createStateDataText(dataItem.data5)));
-		$tr.append($('<td class="w-25p text-center">').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
+		$tr.append($('<td class="date text-center">').text(moment(dataItem.msgTime).format('YYYY-MM-DD HH:mm:ss')));
 		return $tr;
 	}
 

@@ -21,9 +21,6 @@ body{
 .m-h-500{
 	max-height: 500px;
 }
-.w-25p{
-	width: 25%;
-}
 .form-control.inline-control {
 	display: inline-block;
   	width: auto;
@@ -112,6 +109,12 @@ th.action{
 div.only-th .table{
 	border-bottom:0;
 	margin-bottom:0;
+}
+th.date{
+	width: 200px;
+}
+td.date{
+	width: 200px;
 }
 
 @media screen and (max-width: 767px){

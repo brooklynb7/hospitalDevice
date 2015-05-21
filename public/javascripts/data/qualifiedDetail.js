@@ -114,7 +114,7 @@
 				if (item.datapoint[1] === 1) {
 					dataId = item.series.dataIds[item.dataIndex];
 				} else {
-					dataId = item.series.thresholdDataIds[item.dataIndex]
+					dataId = item.series.thresholdDataIds[item.dataIndex];
 				}
 				changePlotHighlight(item.series, item.datapoint);
 				$(selector.dataListTbody + '>tr').removeClass(selector.className.info);

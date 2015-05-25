@@ -96,9 +96,18 @@
 	Service.prototype.postData = function(dataObj){
 		return $.ajax({
 			url: this.apiUrl('/data'),
-			method: 'POST'
+			method: 'POST',
+			data: dataObj
 		});
 	};
+
+	Service.prototype.postQualifiedData = function (dataObj) {
+		return $.ajax({
+			url: this.apiUrl('/data/qualified'),
+			method: 'POST',
+			data: dataObj
+		});
+	}
 
 
 	Service.prototype.simluateData = function(days, deviceId){

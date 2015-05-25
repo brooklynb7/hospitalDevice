@@ -28,6 +28,14 @@ body{
 	display: inline-block;
   	width: auto;
 }
+.radio.inline-control{
+	display: inline-block;
+}
+.radio.inline-control label{
+	padding-left: 30px !important;
+	margin-right: 15px !important;
+}
+
 
 .flot-placeholder{
 	width: 100%;
@@ -113,6 +121,12 @@ div.only-th .table{
 	border-bottom:0;
 	margin-bottom:0;
 }
+
+div.only-th .table-bordered>thead>tr>td, 
+div.only-th .table-bordered>thead>tr>th {
+	border-bottom-width: 1px;
+}
+
 th.date{
 	width: 200px;
 }
@@ -120,7 +134,16 @@ td.date{
 	width: 200px;
 }
 td.date-with-scroll{
-	width: 185px;
+	width: 200px;
+}
+
+.form-group.no-bottom{
+	margin-bottom: 0 !important;
+}
+
+.postDataMsg,
+.postQualifiedDataMsg{
+	margin-left: 10px;
 }
 
 @media screen and (max-width: 767px){

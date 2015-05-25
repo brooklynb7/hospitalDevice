@@ -195,8 +195,9 @@ exports.getQualifiedDataList = function(req, res){
 exports.doPostQualifed = function(req, res) {
 	var paramters = req.body;
 	var qualifiedData = new QualifiedData({});
+	qualifiedData.isQualified = paramters.isQualified;
 	qualifiedData.deviceId = paramters.deviceId;
-	qualifiedData.msgTime = paramters.msgTime || null;
+	qualifiedData.msgTime = paramters.msgTime || Date.now();
 
 	qualifiedData.save(function(err) {
 		if (err) {

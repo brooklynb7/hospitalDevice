@@ -1,8 +1,10 @@
 extends ../layout
 
-mixin dataInput(id)
-	input.form-control.inline-control.text-center(id=id, type='text')
-	span (请填写1－10之间的数字)
+mixin dataInput(id, text)
+	div.form-group.no-bottom(id=id+'FormGroup')
+		label.control-label!= text+':'
+		input.form-control.inline-control.text-center(id=id, type='text')
+		span (请填写1－10之间的数字)
 
 block content
 	div.panel.panel-default.apiPanel#dataApiPanel
@@ -17,36 +19,21 @@ block content
 			div 
 				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
 				span.simulate7daysMsg
-			//- hr
-			//- div 
-			//- 	span 模拟采集
-			//- 	select.form-control.inline-control.deviceSelect2
-			//- 		each device in deviceList
-			//- 			option(value=device.deviceId)= device.name + '('+ device.deviceId +')'
-			//- 	span 的当前数据
-			//- div
-			//- 	span 指标1:
-			//- 	span 
-			//- 		+dataInput('data1Input')
-			//- div
-			//- 	span 指标2:
-			//- 	span 
-			//- 		+dataInput('data2Input')
-			//- div
-			//- 	span 指标3:
-			//- 	span 
-			//- 		+dataInput('data3Input')
-			//- div
-			//- 	span 指标4:
-			//- 	span 
-			//- 		+dataInput('data4Input')
-			//- div
-			//- 	span 指标5:
-			//- 	span 
-			//- 		+dataInput('data5Input')
-			//- div 
-			//- 	a.simulateTodayBtn.btn.btn-primary(href='javascript:void(0)') 确定
-			//- 	span.postDataMsg
+			hr
+			div
+				span 模拟采集
+				select.form-control.inline-control.deviceSelect2
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')'
+				span 的当前数据
+			+dataInput('data1Input', '指标1')
+			+dataInput('data2Input', '指标2')
+			+dataInput('data3Input', '指标3')
+			+dataInput('data4Input', '指标4')
+			+dataInput('data5Input', '指标5')
+			div 
+				a.simulateTodayBtn.btn.btn-primary(href='javascript:void(0)') 确定
+				span.postDataMsg
 
 	div.panel.panel-default.apiPanel#qualifiedDataApiPanel
 		div.panel-heading 消毒合格数据采集API
@@ -59,5 +46,25 @@ block content
 				span 前7天的数据
 			div 
 				a.simulate7daysBtn.btn.btn-primary(href='javascript:void(0)') 确定
+			hr
+			div
+				span 模拟采集
+				select.form-control.inline-control.deviceSelect2
+					each device in deviceList
+						option(value=device.deviceId)= device.name + '('+ device.deviceId +')'
+				span 的当前数据
+			div
+				label.control-label 合格指标:
+				div.radio.radio-primary.inline-control
+					label
+						input(type='radio', name='qualifiedRadios', id='optionsRadios1' value='1', checked='')
+						合格
+				div.radio.radio-primary.inline-control
+					label
+						input(type='radio', name='qualifiedRadios', id='optionsRadios2' value='0')
+						不合格
+			div 
+				a.simulateTodayBtn.btn.btn-primary(href='javascript:void(0)') 确定
+				span.postQualifiedDataMsg
 block extraScripts
 	script(type='text/javascript', src='/static/javascripts/data/index.js')

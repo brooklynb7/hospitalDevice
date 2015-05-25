@@ -27,7 +27,7 @@
 			color: 'rgb(200, 20, 30)'
 		},
 		points: {
-			show: false
+			show: true
 		}
 	};
 	function renderDataFLot(dataList, dateVal) {
@@ -38,6 +38,10 @@
 				minTickSize: [1, 'hour'],
 				min: moment(dateVal, 'YYYYMMDD'),
 				max: moment(dateVal, 'YYYYMMDD').add(1, 'days')
+			},
+			yaxis: {
+				min: 0,
+				max: 10
 			},
 			series: {
 				lines: {

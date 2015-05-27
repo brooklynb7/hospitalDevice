@@ -1,15 +1,22 @@
 'use strict';
 
 var morgan = require('morgan'),
-	moment = require('moment');
+	moment = require('moment'),
+	path = require('path'),
+	util = require(path.resolve('./app/utils'));
 
 morgan.token('logTime', function(req, res) {
 	return moment().format('YYYY-MM-DD HH:mm:ss');
 });
 
+morgan.token('realIP', function(req, res){
+	return util.getRealIP(req.ip);
+
+});
+
 var format = {
 	dev: 'dev',
-	manual: '[:logTime] :remote-addr :method :url :status :res[content-length] -:response-time ms'
+	manual: '[:logTime] :realIP :method :url :status :res[content-length] -:response-time ms'
 };
 
 module.exports = function(app) {

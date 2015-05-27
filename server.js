@@ -32,10 +32,10 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-app.listen(config.port, '127.0.0.1');
+app.listen(config.port);
 
 // Expose app
 exports = module.exports = app;
 
 // Logging initialization
-console.log('[' + moment().format('YYYY-MM-DD h:mm:ss') + '] Application started on port ' + config.port);
+console.log('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Application started on port ' + config.port);

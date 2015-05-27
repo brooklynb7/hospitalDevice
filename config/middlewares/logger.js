@@ -4,7 +4,7 @@ var morgan = require('morgan'),
 	moment = require('moment');
 
 morgan.token('logTime', function(req, res) {
-	return moment().format('YYYY-MM-DD h:mm:ss');
+	return moment().format('YYYY-MM-DD HH:mm:ss');
 });
 
 var format = {

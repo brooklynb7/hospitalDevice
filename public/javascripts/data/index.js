@@ -107,7 +107,7 @@
 
 			_.each(dataInputs, function(val, idx) {
 				var formSelector = $('#data' + (idx + 1) + 'InputFormGroup');
-				var val = parseInt(val);
+				val = parseInt(val);
 				if (!$.isNumeric(val) || val < 1 || val > 10) {
 					formSelector.addClass('has-error');
 					isValid = false;
@@ -140,7 +140,7 @@
 					})
 					.always(function() {
 						bi.hide();
-					})
+					});
 			}
 		});
 	}

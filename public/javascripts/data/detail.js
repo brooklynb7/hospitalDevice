@@ -24,6 +24,7 @@
 		color: 'rgb(30, 180, 20)',
 		threshold: {
 			below: 2,
+			above: 9,
 			color: 'rgb(200, 20, 30)'
 		},
 		points: {

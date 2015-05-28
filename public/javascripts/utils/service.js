@@ -107,8 +107,7 @@
 			method: 'POST',
 			data: dataObj
 		});
-	}
-
+	};
 
 	Service.prototype.simluateData = function(days, deviceId){
 		return $.ajax({

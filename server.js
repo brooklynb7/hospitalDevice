@@ -22,7 +22,6 @@ var db = mongoose.connect(config.db, function(err) {
 		console.log(chalk.red(err));
 	}
 });
-console.log(db.connections[0].db.databaseName);
 autoIncrement.initialize(db);
 
 // Init the express application

@@ -1,5 +1,32 @@
 body{
-	clear: both;
+	background-color: #F5F5F5;
+}
+
+.navbar .navbar-nav>li>a:hover, 
+.navbar .navbar-nav>li>a:focus {
+	color: rgba(255,255,255,1);
+}
+
+.dropdown-menu{
+	padding: 1px 0;
+	border-radius: 0;
+}
+.dropdown-menu>li>a{
+	padding: 4px 20px;
+}
+
+@media (max-width: 767px){
+	.navbar .navbar-nav .open .dropdown-menu>.active>a, 
+	.navbar .navbar-nav .open .dropdown-menu>.active>a:hover, 
+	.navbar .navbar-nav .open .dropdown-menu>.active>a:focus {
+		color: inherit;
+		background-color: rgba(255,255,255,.1);
+	}
+	.navbar .navbar-nav .open .dropdown-menu>li>a:hover, 
+	.navbar .navbar-nav .open .dropdown-menu>li>a:focus {
+		color: rgba(255,255,255,1);
+		background-color: transparent;
+	}
 }
 
 .nav-tabs{
@@ -63,10 +90,6 @@ body{
 	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-.signinForm, .signupForm{
-	width: 75%;
-	margin: auto;
 }
 
 .userListPanel .panel-heading,

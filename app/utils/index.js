@@ -3,6 +3,9 @@
 var _ = require('lodash');
 
 exports.getRealIP = function(ipString) {
+	if(!ipString) {
+		return ipString;
+	}
 	var realIP = null;
 	var ipArray = ipString.split(':');
 	if (ipArray.length === 1) {

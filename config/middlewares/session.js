@@ -16,7 +16,10 @@ module.exports = function(app, db) {
 		store: new mongoStore({
 			db: db.connections[0].db.databaseName,
 			collection: config.sessionCollection
-		})
+		}),
+		cookie: {
+			maxAge: 2 * 60 * 60 * 1000
+		}
 	}));
 
 	// use passport session

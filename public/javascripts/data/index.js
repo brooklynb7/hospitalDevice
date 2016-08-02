@@ -1,5 +1,5 @@
+'use strict';
 (function($) {
-	'use strict';
 
 	var selector = {
 		dataApi: {
@@ -107,7 +107,7 @@
 
 			_.each(dataInputs, function(val, idx) {
 				var formSelector = $('#data' + (idx + 1) + 'InputFormGroup');
-				val = parseInt(val);
+				val = parseInt(val, 10);
 				if (!$.isNumeric(val) || val < 1 || val > 10) {
 					formSelector.addClass('has-error');
 					isValid = false;
@@ -126,44 +126,40 @@
 				bi.show();
 
 				Service.postData({
-						data1: dataInputs[0],
-						data2: dataInputs[1],
-						data3: dataInputs[2],
-						data4: dataInputs[3],
-						data5: dataInputs[4],
-						deviceId: $(selector.dataApi.selectedDevice2).val()
-					}).done(function() {
-						$postDataMsg.removeClass('text-danger').addClass('text-success').text('数据提交成功').fadeOut(4000);
-					})
-					.fail(function(jqXHR) {
-						$postDataMsg.addClass('text-danger').removeClass('text-success').text(jqXHR.responseText);
-					})
-					.always(function() {
-						bi.hide();
-					});
+					data1: dataInputs[0],
+					data2: dataInputs[1],
+					data3: dataInputs[2],
+					data4: dataInputs[3],
+					data5: dataInputs[4],
+					deviceId: $(selector.dataApi.selectedDevice2).val()
+				}).done(function() {
+					$postDataMsg.removeClass('text-danger').addClass('text-success').text('数据提交成功').fadeOut(4000);
+				}).fail(function(jqXHR) {
+					$postDataMsg.addClass('text-danger').removeClass('text-success').text(jqXHR.responseText);
+				}).always(function() {
+					bi.hide();
+				});
 			}
 		});
 	}
 
 	function bindSimulateTodayQualifiedDataEvent() {
 		$(selector.qualifiedDataApi.simulateTodayBtn).on('click', function() {
-			var val = parseInt($(selector.qualifiedDataApi.selectedQualifiedData).val());
+			var val = parseInt($(selector.qualifiedDataApi.selectedQualifiedData).val(), 10);
 			var bi = new BusyIndicator($(selector.qualifiedDataApi.panel));
 			bi.show();
 			var $postQualifiedDataMsg = $(selector.qualifiedDataApi.postQualifiedDataMsg);
 			Service.postQualifiedData({
 				deviceId: $(selector.qualifiedDataApi.selectedDevice2).val(),
-				isQualified: val ? true : false
-			}).done(function(){
+				isQualified: !!val
+			}).done(function() {
 				$postQualifiedDataMsg.removeClass('text-danger').addClass('text-success').text('数据提交成功').fadeOut(4000);
-			})
-			.fail(function(jqXHR){
+			}).fail(function(jqXHR) {
 				$postQualifiedDataMsg.addClass('text-danger').removeClass('text-success').text(jqXHR.responseText);
-			})
-			.always(function(){
+			}).always(function() {
 				bi.hide();
 			});
 		});
 	}
 
-})(jQuery);
+}(jQuery));

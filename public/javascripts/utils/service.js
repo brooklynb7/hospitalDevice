@@ -1,5 +1,5 @@
+'use strict';
 (function($) {
-	'use strict';
 
 	var Service = function() {
 		this.url_prefix = '/api';
@@ -34,14 +34,14 @@
 		});
 	};
 
-	Service.prototype.getUserList = function(){
+	Service.prototype.getUserList = function() {
 		return $.ajax({
 			url: this.apiUrl('/users'),
 			method: 'GET'
 		});
 	};
 
-	Service.prototype.updateUserInfo = function(id, userInfo){
+	Service.prototype.updateUserInfo = function(id, userInfo) {
 		return $.ajax({
 			url: this.apiUrl('/users/' + id),
 			method: 'PUT',
@@ -49,14 +49,14 @@
 		});
 	};
 
-	Service.prototype.removeUser = function(id){
+	Service.prototype.removeUser = function(id) {
 		return $.ajax({
 			url: this.apiUrl('/users/' + id),
 			method: 'DELETE'
 		});
 	};
 
-	Service.prototype.getDeviceList = function(){
+	Service.prototype.getDeviceList = function() {
 		return $.ajax({
 			url: this.apiUrl('/devices'),
 			method: 'GET'
@@ -75,7 +75,7 @@
 		});
 	};
 
-	Service.prototype.updateDevice = function(id, deviceObj){
+	Service.prototype.updateDevice = function(id, deviceObj) {
 		return $.ajax({
 			url: this.apiUrl('/devices/' + id),
 			method: 'PUT',
@@ -83,7 +83,7 @@
 		});
 	};
 
-	Service.prototype.removeDevice = function(id){
+	Service.prototype.removeDevice = function(id) {
 		return $.ajax({
 			url: this.apiUrl('/devices/' + id),
 			method: 'DELETE'
@@ -93,7 +93,7 @@
 	/*
 	 *	Data Api
 	 */
-	Service.prototype.postData = function(dataObj){
+	Service.prototype.postData = function(dataObj) {
 		return $.ajax({
 			url: this.apiUrl('/data'),
 			method: 'POST',
@@ -101,7 +101,7 @@
 		});
 	};
 
-	Service.prototype.postQualifiedData = function (dataObj) {
+	Service.prototype.postQualifiedData = function(dataObj) {
 		return $.ajax({
 			url: this.apiUrl('/data/qualified'),
 			method: 'POST',
@@ -109,28 +109,28 @@
 		});
 	};
 
-	Service.prototype.simluateData = function(days, deviceId){
+	Service.prototype.simluateData = function(days, deviceId) {
 		return $.ajax({
 			url: this.apiUrl('/data/simulate/' + deviceId + '/' + days),
 			method: 'POST'
 		});
 	};
 
-	Service.prototype.simluateQualifiedData = function(days, deviceId){
+	Service.prototype.simluateQualifiedData = function(days, deviceId) {
 		return $.ajax({
 			url: this.apiUrl('/data/qualified/simulate/' + deviceId + '/' + days),
 			method: 'POST'
 		});
 	};
 
-	Service.prototype.getDataList = function(date, deviceId){
+	Service.prototype.getDataList = function(date, deviceId) {
 		return $.ajax({
 			url: this.apiUrl('/data?deviceId=' + deviceId + '&date=' + date),
 			method: 'GET'
 		});
 	};
 
-	Service.prototype.getQualifedDataList = function(date, deviceId){
+	Service.prototype.getQualifedDataList = function(date, deviceId) {
 		return $.ajax({
 			url: this.apiUrl('/data/qualified?deviceId=' + deviceId + '&date=' + date),
 			method: 'GET'
@@ -138,4 +138,4 @@
 	};
 
 	window.Service = new Service();
-})(jQuery);
+}(jQuery));

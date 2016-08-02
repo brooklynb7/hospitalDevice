@@ -13,7 +13,7 @@ module.exports = function(app) {
 	app.use('/data', pageRouter);
 
 	apiRouter.get('/', user.requireLoginApi, data.getDataList);
-	apiRouter.post('/', user.requireLoginApi, data.doPost);
+	apiRouter.post('/', data.doPost);
 	apiRouter.post('/simulate/:deviceId/:days', user.requireLoginApi, data.simulateData);
 	apiRouter.get('/qualified', user.requireLoginApi, data.getQualifiedDataList);
 	apiRouter.post('/qualified', user.requireLoginApi, data.doPostQualifed);

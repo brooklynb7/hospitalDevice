@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 exports.getRealIP = function(ipString) {
-	if(!ipString) {
+	if (!ipString) {
 		return ipString;
 	}
 	var realIP = null;
@@ -11,8 +11,8 @@ exports.getRealIP = function(ipString) {
 	if (ipArray.length === 1) {
 		realIP = ipString;
 	} else {
-		var ip = ipArray[ipArray.length -1];
-		if(ip === '1') {
+		var ip = ipArray[ipArray.length - 1];
+		if (ip === '1') {
 			realIP = '127.0.0.1';
 		} else {
 			realIP = ip;

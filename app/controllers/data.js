@@ -42,7 +42,7 @@ exports.detailPage = function(req, res, next) {
 	});
 };
 
-exports.qualifiedDetailPage = function(req, res, next){
+exports.qualifiedDetailPage = function(req, res, next) {
 	async.parallel([getDeviceListFn], function(err, results) {
 		if (err) return next(err, req, res);
 
@@ -87,6 +87,7 @@ exports.getDataList = function(req, res) {
 exports.doPost = function(req, res) {
 	var paramters = req.body;
 	var data = new Data({});
+	console.log(paramters);
 	data.data1 = paramters.data1 || null;
 	data.data2 = paramters.data2 || null;
 	data.data3 = paramters.data3 || null;
@@ -166,7 +167,7 @@ exports.simulateData = function(req, res) {
 	});
 };
 
-exports.getQualifiedDataList = function(req, res){
+exports.getQualifiedDataList = function(req, res) {
 	var deviceId = req.query.deviceId;
 	var date = req.query.date;
 	if (!deviceId) {

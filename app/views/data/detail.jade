@@ -16,10 +16,10 @@ block content
 						option(value=device.deviceId)= device.name + '('+ device.deviceId +')' 
 				span 在 
 				select.form-control.inline-control.dateSelect
-					option(value=moment().format('YYYYMMDD')) 今天
+					option(value=moment().format('YYYYMMDD'),selected='selected') 今天
 					- var i = 1
 					while i <= 7
-						+dateOption(i++, (i===2))
+						+dateOption(i++, (i===0))
 				sapn 的指标采集记录(数值小于2的将标记为红色警示)
 		div.panel-body.padding-0
 			ul.nav.nav-tabs.dataTab

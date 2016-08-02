@@ -1,6 +1,6 @@
-(function($) {
-	'use strict';
+'use strict';
 
+(function($) {
 	var selector = {
 		dataPanel: '.dataPanel',
 		dataList: '.dataPanel .dataList',
@@ -31,6 +31,7 @@
 			show: true
 		}
 	};
+
 	function renderDataFLot(dataList, dateVal) {
 		plot = $.plot(selector.dataFlot, [dataList], {
 			xaxis: {
@@ -87,7 +88,7 @@
 
 	function bindDataTabChangeEvent() {
 		$(selector.dataTab).on('click', function() {
-			currentDataType = parseInt($(this).attr('dataType'));
+			currentDataType = parseInt($(this).attr('dataType'), 10);
 			flotConfig.data = data[currentDataType - 1];
 			renderDataFLot(flotConfig, $(selector.selectedDate).val());
 		});
@@ -129,11 +130,11 @@
 				$.each(dataList, function(idx, dataItem) {
 					$(selector.dataListTbody).append(createDataTr(dataItem));
 					var msgTime = new Date(dataItem.msgTime).valueOf();
-					data[0].push([msgTime, parseInt(dataItem.data1)]);
-					data[1].push([msgTime, parseInt(dataItem.data2)]);
-					data[2].push([msgTime, parseInt(dataItem.data3)]);
-					data[3].push([msgTime, parseInt(dataItem.data4)]);
-					data[4].push([msgTime, parseInt(dataItem.data5)]);
+					data[0].push([msgTime, parseInt(dataItem.data1, 10)]);
+					data[1].push([msgTime, parseInt(dataItem.data2, 10)]);
+					data[2].push([msgTime, parseInt(dataItem.data3, 10)]);
+					data[3].push([msgTime, parseInt(dataItem.data4, 10)]);
+					data[4].push([msgTime, parseInt(dataItem.data5, 10)]);
 				});
 			}
 			flotConfig.data = data[currentDataType - 1];
@@ -167,5 +168,4 @@
 		}
 		return $span;
 	}
-
-})(jQuery);
+}(jQuery));

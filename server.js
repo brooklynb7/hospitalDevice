@@ -2,11 +2,11 @@
 /**
  * Module dependencies.
  */
-var init = require('./config/init')(),
-	config = require('./config/config'),
+const path = require('path'),
+	init = require(path.resolve('./config/init'))(),
+	config = require(path.resolve('./config/config')),
 	mongoose = require('mongoose'),
 	autoIncrement = require('mongoose-auto-increment'),
-	path = require('path'),
 	moment = require('moment'),
 	chalk = require('chalk');
 
@@ -25,10 +25,10 @@ var db = mongoose.connect(config.db, config.dbOptions, function(err) {
 autoIncrement.initialize(db);
 
 // Init the express application
-var app = require('./config/express')(db);
+var app = require(path.resolve('./config/express'))(db);
 
 // Bootstrap passport config
-require('./config/passport')();
+require(path.resolve('./config/passport'))();
 
 // Start the app by listening on <port>
 app.listen(config.port);

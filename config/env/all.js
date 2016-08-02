@@ -7,7 +7,7 @@ module.exports = {
 		keywords: ''
 	},
 	port: process.env.PORT || 9101,
-	tcp_port: process.env.TCP_PORT || 9100,
+	tcp_port: process.env.TCP_PORT || 8088,
 	roles: {
 		all: '*',
 		user: 'user',

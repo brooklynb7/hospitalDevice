@@ -5,7 +5,7 @@ const net = require('net'),
 	init = require(path.resolve('./config/init'))(),
 	config = require(path.resolve('./config/config'));
 
-const tcp_host = '0.0.0.0';
+const tcp_host = '112.124.117.116'; //'0.0.0.0';
 const tcp_port = config.tcp_port;
 
 var client = new net.Socket();
@@ -17,7 +17,7 @@ crlf[1] = 0xA; // LF - Line feed character
 client.connect(tcp_port, tcp_host, function() {
 
 	console.log('CONNECTED TO: ' + tcp_host + ':' + tcp_port);
-	client.write('data1=5&data2=6&data3=5&data4=5&data5=5&deviceId=DV0001');
+	client.write('data1=5&data2=6&data3=15&data4=5&data5=5&deviceId=DV0001');
 });
 
 client.on('data', function(data) {
